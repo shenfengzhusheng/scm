@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.basic.dict.mapper.DictPoMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.basic.dict.po.DictPo" >
+    <id column="dict_id" property="dictId" jdbcType="BIGINT" />
+    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+    <result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="dict_type_code" property="dictTypeCode" jdbcType="VARCHAR" />
+    <result column="dict_type_name" property="dictTypeName" jdbcType="VARCHAR" />
+    <result column="type_seq" property="typeSeq" jdbcType="INTEGER" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="dictViewResultMap" type="org.xfs.scm.data.business.basic.dict.vo.DictInfoVo" >
+        <id column="dict_type_code" property="dictTypeCode" jdbcType="VARCHAR" />
+        <result column="dict_type_name" property="dictTypeName" jdbcType="VARCHAR" />
+        <result column="type_seq" property="typeSeq" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    td.dict_id, td.dict_code, td.dict_name, td.seq, td.table_name, td.dict_type_code, td.dict_type_name,td.type_seq, td.created_by,
+    td.created_time, td.last_update_by, td.last_update_time
+  </sql>
+  <select id="getDictPos" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    select 
+      <include refid="Base_Column_List" />
+    from tb_dict td
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="dictId!=null">
+        AND td.dict_id = #{dictId,jdbcType=BIGINT}
+      </if>
+      <if test="dictCode!=null">
+        AND td.dict_code  LIKE  CONCAT('%', #{dictCode,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="dictName!=null">
+        AND td.dict_name LIKE  CONCAT('%', #{dictName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="dictTypeCode!=null">
+        AND td.dict_type_code = #{dictTypeCode,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+
+  <select id="getDictInfo" resultMap="dictViewResultMap" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    SELECT
+            td.dict_id, td.dict_code, td.dict_name, td.seq, td.dict_type_code, td.dict_type_name,td.type_seq
+    FROM tb_dict td
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+        <if test="dictId!=null">
+          AND td.dict_id = #{dictId,jdbcType=BIGINT}
+        </if>
+        <if test="dictTypeCode!=null">
+          AND td.dict_type_code = #{dictTypeCode,jdbcType=VARCHAR}
+        </if>
+
+    </trim>
+  </select>
+
+  <select id="getDictType" resultMap="dictViewResultMap" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    SELECT
+        td.type_seq,td.dict_type_code, td.dict_type_name
+    FROM tb_dict td
+        GROUP BY td.type_seq,td.dict_type_code, td.dict_type_name
+          ORDER BY td.type_seq
+  </select>
+
+
+  <delete id="removeDictPo" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    delete from tb_dict
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="DictVo" >
+    insert into tb_dict (dict_id, dict_code, dict_name,
+      seq, table_name, dict_type_code,
+      dict_type_name, created_by, created_time,
+      last_update_by, last_update_time)
+    values (#{dictId,jdbcType=BIGINT}, #{dictCode,jdbcType=VARCHAR}, #{dictName,jdbcType=VARCHAR},
+      #{seq,jdbcType=INTEGER}, #{tableName,jdbcType=VARCHAR}, #{dictTypeCode,jdbcType=VARCHAR},
+      #{dictTypeName,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+      #{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>-->
+  <insert id="addDictPo" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    insert into tb_dict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        dict_id,
+      </if>
+      <if test="dictCode != null" >
+        dict_code,
+      </if>
+      <if test="dictName != null" >
+        dict_name,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="dictTypeCode != null" >
+        dict_type_code,
+      </if>
+      <if test="dictTypeName != null" >
+        dict_type_name,
+      </if>
+      <if test="typeSeq != null" >
+        type_seq,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+        created_time,
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+        last_update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        #{dictId,jdbcType=BIGINT},
+      </if>
+      <if test="dictCode != null" >
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeCode != null" >
+        #{dictTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeName != null" >
+        #{dictTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeSeq != null" >
+        #{typeSeq,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      now(),
+    </trim>
+  </insert>
+  <update id="modifyDictPo" parameterType="org.xfs.scm.data.business.basic.dict.vo.DictVo" >
+    update tb_dict
+    <set >
+      <if test="dictCode != null" >
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeCode != null" >
+        dict_type_code = #{dictTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeName != null" >
+        dict_type_name = #{dictTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeSeq != null" >
+        type_seq=#{typeSeq,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+        last_update_time = NOW(),
+    </set>
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

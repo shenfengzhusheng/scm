@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.busi.bid.mapper.BusiOrderBidMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.busi.bid.vo.BusiOrderBidVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+    <result column="bid_price" property="bidPrice" jdbcType="INTEGER" />
+    <result column="bid_remark" property="bidRemark" jdbcType="VARCHAR" />
+    <result column="bid_status" property="bidStatus" jdbcType="INTEGER" />
+    <result column="bid_expired_time" property="bidExpiredTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, driver_user_id, bid_price, bid_remark, bid_status, bid_expired_time, 
+    create_time
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tb_busi_order_bid-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >-->
+    <!--delete from tb_busi_order_bid-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.busi.bid.entity.BusiOrderBid" >-->
+    <!--insert into tb_busi_order_bid (id, order_id, driver_user_id, -->
+      <!--bid_price, bid_remark, bid_status, -->
+      <!--bid_expired_time, create_time)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{driverUserId,jdbcType=BIGINT}, -->
+      <!--#{bidPrice,jdbcType=INTEGER}, #{bidRemark,jdbcType=VARCHAR}, #{bidStatus,jdbcType=INTEGER}, -->
+      <!--#{bidExpiredTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="org.xfs.scm.data.business.busi.bid.entity.BusiOrderBid" >-->
+    <!--insert into tb_busi_order_bid-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id,-->
+      <!--</if>-->
+      <!--<if test="driverUserId != null" >-->
+        <!--driver_user_id,-->
+      <!--</if>-->
+      <!--<if test="bidPrice != null" >-->
+        <!--bid_price,-->
+      <!--</if>-->
+      <!--<if test="bidRemark != null" >-->
+        <!--bid_remark,-->
+      <!--</if>-->
+      <!--<if test="bidStatus != null" >-->
+        <!--bid_status,-->
+      <!--</if>-->
+      <!--<if test="bidExpiredTime != null" >-->
+        <!--bid_expired_time,-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--#{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="driverUserId != null" >-->
+        <!--#{driverUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="bidPrice != null" >-->
+        <!--#{bidPrice,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="bidRemark != null" >-->
+        <!--#{bidRemark,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="bidStatus != null" >-->
+        <!--#{bidStatus,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="bidExpiredTime != null" >-->
+        <!--#{bidExpiredTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--#{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="org.xfs.scm.data.business.busi.bid.entity.BusiOrderBid" >-->
+    <!--update tb_busi_order_bid-->
+    <!--<set >-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id = #{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="driverUserId != null" >-->
+        <!--driver_user_id = #{driverUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="bidPrice != null" >-->
+        <!--bid_price = #{bidPrice,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="bidRemark != null" >-->
+        <!--bid_remark = #{bidRemark,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="bidStatus != null" >-->
+        <!--bid_status = #{bidStatus,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="bidExpiredTime != null" >-->
+        <!--bid_expired_time = #{bidExpiredTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="org.xfs.scm.data.business.busi.bid.entity.BusiOrderBid" >-->
+    <!--update tb_busi_order_bid-->
+    <!--set order_id = #{orderId,jdbcType=VARCHAR},-->
+      <!--driver_user_id = #{driverUserId,jdbcType=BIGINT},-->
+      <!--bid_price = #{bidPrice,jdbcType=INTEGER},-->
+      <!--bid_remark = #{bidRemark,jdbcType=VARCHAR},-->
+      <!--bid_status = #{bidStatus,jdbcType=INTEGER},-->
+      <!--bid_expired_time = #{bidExpiredTime,jdbcType=TIMESTAMP},-->
+      <!--create_time = #{createTime,jdbcType=TIMESTAMP}-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</update>-->
+</mapper>

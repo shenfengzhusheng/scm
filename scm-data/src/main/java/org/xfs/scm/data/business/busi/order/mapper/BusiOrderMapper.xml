@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.busi.order.mapper.BusiOrderMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.busi.order.po.BusiOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />
+    <result column="goods_load_time" property="goodsLoadTime" jdbcType="TIMESTAMP" />
+    <result column="owner_remark" property="ownerRemark" jdbcType="VARCHAR" />
+    <result column="order_src" property="orderSrc" jdbcType="INTEGER" />
+    <result column="bid_type" property="bidType" jdbcType="INTEGER" />
+    <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+    <result column="share_type" property="shareType" jdbcType="INTEGER" />
+    <result column="need_receipt" property="needReceipt" jdbcType="INTEGER" />
+    <result column="need_invoice" property="needInvoice" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="cancel_type" property="cancelType" jdbcType="INTEGER" />
+    <result column="cancel_remark" property="cancelRemark" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="INTEGER" />
+    <result column="expect_price" property="expectPrice" jdbcType="INTEGER" />
+    <result column="order_count" property="orderCount" jdbcType="INTEGER" />
+    <result column="order_batch" property="orderBatch" jdbcType="VARCHAR" />
+    <result column="pay_status" property="payStatus" jdbcType="INTEGER" />
+    <result column="expect_arrive_time" property="expectArriveTime" jdbcType="TIMESTAMP" />
+    <result column="real_arrive_time" property="realArriveTime" jdbcType="TIMESTAMP" />
+    <result column="receipt_code" property="receiptCode" jdbcType="VARCHAR" />
+    <result column="receipt_url" property="receiptUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="report_status" property="reportStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <resultMap id="orderResultMap" type="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo" extends="BaseResultMap" >
+
+    <!-- 订单收发货人信息 -->
+    <association  property="contact"  javaType="org.xfs.scm.data.business.busi.contact.vo.BusiOrderContactVo">
+      <id column="contact_id" property="id" jdbcType="BIGINT" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="start_addr_code" property="startAddrCode" jdbcType="VARCHAR" />
+      <result column="start_addr_detail" property="startAddrDetail" jdbcType="VARCHAR" />
+      <result column="start_contact_phone" property="startContactPhone" jdbcType="VARCHAR" />
+      <result column="start_contact_name" property="startContactName" jdbcType="VARCHAR" />
+      <result column="end_addr_code" property="endAddrCode" jdbcType="VARCHAR" />
+      <result column="end_addr_detail" property="endAddrDetail" jdbcType="VARCHAR" />
+      <result column="end_contact_phone" property="endContactPhone" jdbcType="VARCHAR" />
+      <result column="end_contact_name" property="endContactName" jdbcType="VARCHAR" />
+    </association>
+
+    <!-- 订单报价情况 -->
+    <association property="appoint" javaType="org.xfs.scm.data.business.busi.appoint.vo.BusiOrderAppointVo">
+      <id column="appoint_id" property="id" jdbcType="BIGINT" />
+      <id column="appoint_user_id" property="appointUserId" jdbcType="BIGINT" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />
+      <result column="appoint_status" property="appointStatus" jdbcType="INTEGER" />
+      <result column="appoint_create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="appoint_updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    </association>
+
+    <!-- 订单货物信息 -->
+    <collection property="goods" ofType="org.xfs.scm.data.business.busi.order.vo.BusiOrderGoodsVo">
+      <id column="order_goods_id" property="id" jdbcType="BIGINT" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+      <result column="goods_type" property="goodsType" jdbcType="INTEGER" />
+      <result column="goods_volume" property="goodsVolume" jdbcType="INTEGER" />
+      <result column="goods_weight" property="goodsWeight" jdbcType="INTEGER" />
+      <result column="vehicle_type" property="vehicleType" jdbcType="INTEGER" />
+      <result column="vehicle_length" property="vehicleLength" jdbcType="INTEGER" />
+      <result column="vehicle_num" property="vehicleNum" jdbcType="INTEGER" />
+    </collection>
+
+    <!-- 订单日志信息 -->
+    <collection property="logs" ofType="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo">
+      <id column="log_id" property="id" jdbcType="BIGINT" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="order_status_from" property="orderStatusFrom" jdbcType="INTEGER" />
+      <result column="order_status_to" property="orderStatusTo" jdbcType="INTEGER" />
+      <result column="log_remark" property="remark" jdbcType="VARCHAR" />
+      <result column="op_type" property="opType" jdbcType="INTEGER" />
+      <result column="op_user_id" property="opUserId" jdbcType="BIGINT" />
+      <result column="op_mid" property="opMid" jdbcType="BIGINT" />
+      <result column="log_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </collection>
+
+    <!-- 订单详细报价信息 -->
+    <collection property="bids" ofType="org.xfs.scm.data.business.busi.bid.vo.BusiOrderBidVo">
+      <id column="bid" property="id" jdbcType="BIGINT" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+      <result column="bid_price" property="bidPrice" jdbcType="INTEGER" />
+      <result column="bid_remark" property="bidRemark" jdbcType="VARCHAR" />
+      <result column="bid_status" property="bidStatus" jdbcType="INTEGER" />
+      <result column="bid_expired_time" property="bidExpiredTime" jdbcType="TIMESTAMP" />
+      <result column="bid_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </collection>
+
+
+  </resultMap>
+
+  <!-- 订单主表信息 -->
+  <sql id="Base_Column_List" >
+    tbo.id, tbo.order_id, tbo.owner_user_id, tbo.goods_load_time, tbo.owner_remark, tbo.order_src, tbo.bid_type,
+    tbo.driver_user_id, tbo.share_type, tbo.need_receipt, tbo.need_invoice, tbo.order_status, tbo.cancel_type,
+    tbo.cancel_remark, tbo.order_price, tbo.expect_price, tbo.order_count, tbo.order_batch, tbo.pay_status, tbo.expect_arrive_time,
+    tbo.real_arrive_time, tbo.receipt_code, tbo.receipt_url, tbo.create_time, tbo.update_time
+  </sql>
+
+  <!-- 订单收发货人信息 -->
+  <sql id="query_order_contact">
+    tboc.id as contact_id,tboc.start_addr_code, tboc.start_addr_detail, tboc.start_contact_phone, tboc.start_contact_name,
+    tboc.end_addr_code, tboc.end_addr_detail, tboc.end_contact_phone, tboc.end_contact_name
+  </sql>
+
+  <!-- 订单商品 -->
+  <sql id="query_order_goods" >
+    tbog.id as order_goods_id,tbog.goods_name, tbog.goods_type, tbog.goods_volume, tbog.goods_weight, tbog.vehicle_type, tbog.vehicle_length,
+    tbog.vehicle_num
+  </sql>
+
+  <!--订单日志-->
+  <sql id="query_order_logs">
+    tbol.id as log_id, tbol.order_status_from, tbol.order_status_to, tbol.remark as log_remark, tbol.op_type, tbol.op_user_id, tbol.op_mid,
+    tbol.create_time as log_create_time
+  </sql>
+
+  <select id="getBusiOrders" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM tb_busi_order tbo
+   <trim prefix="WHERE" prefixOverrides="AND |OR ">
+     <if test="orderId!=null">
+       AND  tbo.id = #{id,jdbcType=BIGINT}
+     </if>
+     <if test="orderId!=null">
+       AND  tbo.order_id LIKE  CONCAT('%',#{orderId,jdbcType=VARCHAR},'%')
+     </if>
+   </trim>
+  </select>
+
+  <select id="gridBusiOrders" parameterType="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo" resultMap="orderResultMap">
+    SELECT <include refid="Base_Column_List" />,
+            <include refid="query_order_contact"/>,
+            <include refid="query_order_goods"/>
+    FROM tb_busi_order tbo LEFT JOIN tb_busi_order_goods tbog ON tbo.order_id=tbog.order_id
+      LEFT JOIN tb_busi_order_contact tboc ON tbo.order_id=tboc.order_id
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="id!=null">
+        AND  tbo.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="orderId!=null">
+        AND  tbo.order_id LIKE  CONCAT('%',#{orderId,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="orderStatus!=null">
+        AND  tbo.order_status = #{orderStatus,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </select>
+
+
+  <delete id="removeBusiOrder" parameterType="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo" >
+    DELETE FROM tb_busi_order
+     <trim prefix="WHERE" prefixOverrides="AND | OR">
+       <if test="id!=null">
+         AND id = #{id,jdbcType=BIGINT}
+       </if>
+       <if test="orderId!=null">
+         AND  tbo.order_id = #{orderId,jdbcType=VARCHAR}
+       </if>
+     </trim>
+
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.busi.order.entity.BusiOrder" >
+    insert into tb_busi_order (id, order_id, owner_user_id, 
+      goods_load_time, owner_remark, order_src, 
+      bid_type, driver_user_id, share_type, 
+      need_receipt, need_invoice, order_status, 
+      cancel_type, cancel_remark, order_price, 
+      expect_price, order_count, order_batch, 
+      pay_status, expect_arrive_time, real_arrive_time, 
+      receipt_code, receipt_url, create_time, 
+      update_time, report_status)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{ownerUserId,jdbcType=BIGINT}, 
+      #{goodsLoadTime,jdbcType=TIMESTAMP}, #{ownerRemark,jdbcType=VARCHAR}, #{orderSrc,jdbcType=INTEGER}, 
+      #{bidType,jdbcType=INTEGER}, #{driverUserId,jdbcType=BIGINT}, #{shareType,jdbcType=INTEGER}, 
+      #{needReceipt,jdbcType=INTEGER}, #{needInvoice,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, 
+      #{cancelType,jdbcType=INTEGER}, #{cancelRemark,jdbcType=VARCHAR}, #{orderPrice,jdbcType=INTEGER}, 
+      #{expectPrice,jdbcType=INTEGER}, #{orderCount,jdbcType=INTEGER}, #{orderBatch,jdbcType=VARCHAR}, 
+      #{payStatus,jdbcType=INTEGER}, #{expectArriveTime,jdbcType=TIMESTAMP}, #{realArriveTime,jdbcType=TIMESTAMP}, 
+      #{receiptCode,jdbcType=VARCHAR}, #{receiptUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{reportStatus,jdbcType=INTEGER})
+  </insert>-->
+  <insert id="addBusiOrder" parameterType="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo"  useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_busi_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="ownerUserId != null" >
+        owner_user_id,
+      </if>
+      <if test="goodsLoadTime != null" >
+        goods_load_time,
+      </if>
+      <if test="ownerRemark != null" >
+        owner_remark,
+      </if>
+      <if test="orderSrc != null" >
+        order_src,
+      </if>
+      <if test="bidType != null" >
+        bid_type,
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id,
+      </if>
+      <if test="shareType != null" >
+        share_type,
+      </if>
+      <if test="needReceipt != null" >
+        need_receipt,
+      </if>
+      <if test="needInvoice != null" >
+        need_invoice,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="cancelType != null" >
+        cancel_type,
+      </if>
+      <if test="cancelRemark != null" >
+        cancel_remark,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="expectPrice != null" >
+        expect_price,
+      </if>
+      <if test="orderCount != null" >
+        order_count,
+      </if>
+      <if test="orderBatch != null" >
+        order_batch,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="expectArriveTime != null" >
+        expect_arrive_time,
+      </if>
+      <if test="realArriveTime != null" >
+        real_arrive_time,
+      </if>
+      <if test="receiptCode != null" >
+        receipt_code,
+      </if>
+      <if test="receiptUrl != null" >
+        receipt_url,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="reportStatus != null" >
+        report_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerUserId != null" >
+        #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsLoadTime != null" >
+        #{goodsLoadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ownerRemark != null" >
+        #{ownerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSrc != null" >
+        #{orderSrc,jdbcType=INTEGER},
+      </if>
+      <if test="bidType != null" >
+        #{bidType,jdbcType=INTEGER},
+      </if>
+      <if test="driverUserId != null" >
+        #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shareType != null" >
+        #{shareType,jdbcType=INTEGER},
+      </if>
+      <if test="needReceipt != null" >
+        #{needReceipt,jdbcType=INTEGER},
+      </if>
+      <if test="needInvoice != null" >
+        #{needInvoice,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cancelType != null" >
+        #{cancelType,jdbcType=INTEGER},
+      </if>
+      <if test="cancelRemark != null" >
+        #{cancelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=INTEGER},
+      </if>
+      <if test="expectPrice != null" >
+        #{expectPrice,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null" >
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderBatch != null" >
+        #{orderBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="expectArriveTime != null" >
+        #{expectArriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realArriveTime != null" >
+        #{realArriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiptCode != null" >
+        #{receiptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptUrl != null" >
+        #{receiptUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportStatus != null" >
+        #{reportStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyBusiOrder" parameterType="org.xfs.scm.data.business.busi.order.vo.BusiOrderVo" >
+    UPDATE tb_busi_order
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerUserId != null" >
+        owner_user_id = #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsLoadTime != null" >
+        goods_load_time = #{goodsLoadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ownerRemark != null" >
+        owner_remark = #{ownerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSrc != null" >
+        order_src = #{orderSrc,jdbcType=INTEGER},
+      </if>
+      <if test="bidType != null" >
+        bid_type = #{bidType,jdbcType=INTEGER},
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id = #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shareType != null" >
+        share_type = #{shareType,jdbcType=INTEGER},
+      </if>
+      <if test="needReceipt != null" >
+        need_receipt = #{needReceipt,jdbcType=INTEGER},
+      </if>
+      <if test="needInvoice != null" >
+        need_invoice = #{needInvoice,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cancelType != null" >
+        cancel_type = #{cancelType,jdbcType=INTEGER},
+      </if>
+      <if test="cancelRemark != null" >
+        cancel_remark = #{cancelRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=INTEGER},
+      </if>
+      <if test="expectPrice != null" >
+        expect_price = #{expectPrice,jdbcType=INTEGER},
+      </if>
+      <if test="orderCount != null" >
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderBatch != null" >
+        order_batch = #{orderBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=INTEGER},
+      </if>
+      <if test="expectArriveTime != null" >
+        expect_arrive_time = #{expectArriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="realArriveTime != null" >
+        real_arrive_time = #{realArriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiptCode != null" >
+        receipt_code = #{receiptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptUrl != null" >
+        receipt_url = #{receiptUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportStatus != null" >
+        report_status = #{reportStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

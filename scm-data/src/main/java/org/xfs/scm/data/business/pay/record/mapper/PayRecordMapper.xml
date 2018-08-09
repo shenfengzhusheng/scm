@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.pay.record.mapper.PayRecordMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.pay.record.entity.PayRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pay_channel" property="payChannel" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="pay_qr_code" property="payQrcode" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="terminal" property="terminal" jdbcType="VARCHAR" />
+    <result column="notify_id" property="notifyId" jdbcType="VARCHAR" />
+    <result column="currency_type" property="currencyType" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="VARCHAR" />
+    <result column="record_no" property="recordNo" jdbcType="VARCHAR" />
+    <result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+    <result column="invoice_amount" property="invoiceAmount" jdbcType="DECIMAL" />
+    <result column="discount_amount" property="discountAmount" jdbcType="DECIMAL" />
+    <result column="receipt_amount" property="receiptAmount" jdbcType="DECIMAL" />
+    <result column="qty" property="qty" jdbcType="DECIMAL" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_user" property="payUser" jdbcType="VARCHAR" />
+    <result column="notify_path" property="notifyPath" jdbcType="VARCHAR" />
+    <result column="refund_fee" property="refundFee" jdbcType="DECIMAL" />
+    <result column="refund_time" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="refund_type" property="refundType" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.xfs.scm.data.business.pay.record.entity.PayRecordWithBLOBs" extends="BaseResultMap" >
+    <result column="body" property="body" jdbcType="LONGVARCHAR" />
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithCustomer" type="org.xfs.scm.data.business.pay.record.po.PayRecordPo" extends="ResultMapWithBLOBs" >
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tp.id,pay_channel, tp.cust_id,appid, tp.order_no,tp.pay_qr_code, tp.cust_name, tp.terminal, tp.notify_id, tp.currency_type, tp.record_type,
+    tp.record_no, tp.pay_status, tp.total_amount, tp.invoice_amount, tp.discount_amount, tp.receipt_amount,tp.qty,
+    tp.subject, tp.pay_time, tp.pay_user, tp.notify_path, tp.refund_fee, tp.refund_time, tp.refund_type, tp.created_by,
+    tp.created_time, tp.last_update_by, tp.last_update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    tp.body, tp.memo
+  </sql>
+  <select id="getPayRecords" resultMap="ResultMapWithCustomer" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    SELECT
+        <include refid="Base_Column_List" />  ,
+        <include refid="Blob_Column_List" />
+    FROM tb_pay_record tp
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="id!=null">
+          AND tp.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="custId!=null">
+          AND tp.cust_id = #{custId,jdbcType=BIGINT}
+        </if>
+        <if test="orderNo != null" >
+          AND  tp.order_no = #{orderNo,jdbcType=VARCHAR}
+        </if>
+        <if test="payChannel!=null">
+          AND tp.pay_channel = #{payChannel,jdbcType=VARCHAR}
+        </if>
+        <if test="startCreatedTime!=null and endCreatedTime!=null">
+          AND tp.created_time BETWEEN  #{startCreatedTime,jdbcType=TIMESTAMP} AND   #{endCreatedTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="payStatus != null" >
+          AND  tp.pay_status = #{payStatus,jdbcType=VARCHAR}
+        </if>
+    </trim>
+  </select>
+
+  <select id="getPayRecordStatus" resultMap="ResultMapWithCustomer" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    SELECT
+    <include refid="Base_Column_List" />  ,
+    <include refid="Blob_Column_List" />
+    FROM tb_pay_record tp
+    where  tp.appid =   #{appid,jdbcType=VARCHAR}
+      <if test="orderNo!=null">
+        AND tp.order_no = #{orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderNo==null">
+        AND tp.record_no = #{recordNo,jdbcType=VARCHAR}
+      </if>
+        AND tp.pay_channel = #{payChannel,jdbcType=VARCHAR}
+        AND  tp.pay_status IN('WAIT_BUYER_PAY','TRADE_PARY')
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    DELETE FROM tb_pay_record  WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >-->
+    <!--insert into tb_pay_record (id, cust_id, order_no, -->
+      <!--cust_name, terminal, notify_id, -->
+      <!--currency_type, record_type, record_no, -->
+      <!--pay_status, total_amount, invoice_amount, -->
+      <!--discount_amount, receipt_amount, subject, -->
+      <!--pay_time, pay_user, notify_path, -->
+      <!--refund_fee, refund_time, refund_type, -->
+      <!--created_by, created_time, last_update_by, -->
+      <!--last_update_time, body, memo-->
+      <!--)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, -->
+      <!--#{custName,jdbcType=VARCHAR}, #{terminal,jdbcType=VARCHAR}, #{notifyId,jdbcType=VARCHAR}, -->
+      <!--#{currencyType,jdbcType=VARCHAR}, #{recordType,jdbcType=VARCHAR}, #{recordNo,jdbcType=VARCHAR}, -->
+      <!--#{payStatus,jdbcType=VARCHAR}, #{totalAmount,jdbcType=DECIMAL}, #{invoiceAmount,jdbcType=DECIMAL}, -->
+      <!--#{discountAmount,jdbcType=DECIMAL}, #{receiptAmount,jdbcType=DECIMAL}, #{subject,jdbcType=VARCHAR}, -->
+      <!--#{payTime,jdbcType=TIMESTAMP}, #{payUser,jdbcType=VARCHAR}, #{notifyPath,jdbcType=VARCHAR}, -->
+      <!--#{refundFee,jdbcType=DECIMAL}, #{refundTime,jdbcType=TIMESTAMP}, #{refundType,jdbcType=VARCHAR}, -->
+      <!--#{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, -->
+      <!--#{lastUpdateTime,jdbcType=TIMESTAMP}, #{body,jdbcType=LONGVARCHAR}, #{memo,jdbcType=LONGVARCHAR}-->
+      <!--)-->
+  <!--</insert>-->
+  <insert id="addPayRecord" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    insert into tb_pay_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="payChannel != null" >
+        pay_channel,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="payQrcode != null" >
+        pay_qr_code,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="terminal != null" >
+        terminal,
+      </if>
+      <if test="notifyId != null" >
+        notify_id,
+      </if>
+      <if test="currencyType != null" >
+        currency_type,
+      </if>
+      <if test="recordType != null" >
+        record_type,
+      </if>
+      <if test="recordNo != null" >
+        record_no,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount,
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount,
+      </if>
+      <if test="receiptAmount != null" >
+        receipt_amount,
+      </if>
+      <if test="qty != null" >
+        qty,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payUser != null" >
+        pay_user,
+      </if>
+      <if test="notifyPath != null" >
+        notify_path,
+      </if>
+      <if test="refundFee != null" >
+        refund_fee,
+      </if>
+      <if test="refundTime != null" >
+        refund_time,
+      </if>
+      <if test="refundType != null" >
+        refund_type,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="payChannel != null" >
+        #{payChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payQrcode != null" >
+        #{payQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyId != null" >
+        #{notifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyType != null" >
+        #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordNo != null" >
+        #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountAmount != null" >
+        #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="receiptAmount != null" >
+        #{receiptAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=DECIMAL},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payUser != null" >
+        #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyPath != null" >
+        #{notifyPath,jdbcType=VARCHAR},
+      </if>
+      <if test="refundFee != null" >
+        #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyPayRecord" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    update tb_pay_record
+    <set >
+      <if test="payChannel != null" >
+        #{pay_channel,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null" >
+        appid= #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payQrcode != null" >
+        pay_qr_code= #{payQrcode,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="terminal != null" >
+        terminal = #{terminal,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyId != null" >
+        notify_id = #{notifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyType != null" >
+        currency_type = #{currencyType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        record_type = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordNo != null" >
+        record_no = #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount = #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="receiptAmount != null" >
+        receipt_amount = #{receiptAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="qty != null" >
+        qty = #{qty,jdbcType=DECIMAL},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payUser != null" >
+        pay_user = #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyPath != null" >
+        notify_path = #{notifyPath,jdbcType=VARCHAR},
+      </if>
+      <if test="refundFee != null" >
+        refund_fee = #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundTime != null" >
+        refund_time = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundType != null" >
+        refund_type = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+  <update id="pay" parameterType="org.xfs.scm.data.business.pay.record.vo.PayRecordVo" >
+    UPDATE tb_pay_record
+    <set >
+      <if test="notifyId != null" >
+        notify_id = #{notifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+        record_type = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="recordNo != null" >
+        record_no = #{recordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="invoiceAmount != null" >
+        invoice_amount = #{invoiceAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountAmount != null" >
+        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="receiptAmount != null" >
+        receipt_amount = IFNULL(receipt_amount,0)+#{receiptAmount,jdbcType=DECIMAL},
+      </if>
+
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payUser != null" >
+        pay_user = #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyPath != null" >
+        notify_path = #{notifyPath,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="memo != null" >
+        memo = #{memo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    WHERE appid=#{appid,jdbcType=VARCHAR}
+       <if test="orderNo!=null">
+           AND order_no = #{orderNo,jdbcType=VARCHAR}
+       </if>
+      <if test="orderNo==null">
+          AND record_no = #{recordNo,jdbcType=VARCHAR}
+      </if>
+       AND pay_status= #{oldPayStatus,jdbcType=VARCHAR}
+
+  </update>
+
+</mapper>

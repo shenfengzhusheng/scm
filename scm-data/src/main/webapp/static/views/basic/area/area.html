@@ -1,0 +1,171 @@
+<script src="static/views/basic/area/js/area.js"></script>
+<link rel="stylesheet" type="text/css" href="static/core/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" />
+<script src="static/core/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="static/core/components/footable/compiled/footable.bootstrap.min.css" />
+<script src="static/core/components/footable/compiled/footable.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="static/core/components-custom/notification-style/css/ns-default.css" />
+<link rel="stylesheet" type="text/css" href="static/core/components-custom/notification-style/css/ns-style-growl.css" />
+<link rel="stylesheet" type="text/css" href="static/core/components-custom/notification-style/css/ns-style-theme.css" />
+<script src="static/core/components-custom/notification-style/js/modernizr.custom.js"></script>
+<script src="static/core/components-custom/notification-style/js/classie.js"></script>
+<script src="static/core/components-custom/notification-style/js/notificationFx.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+            <li><a href="">基础信息</a></li>
+            <li class="active"><span>地址</span></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="">
+        <div ng-include="'static/views/basic/area/areaForm.html'"></div>
+
+        <div class="main-box clearfix">
+
+            <header class="main-box-header clearfix">
+                <div class="pagecallout pagecallout-info">
+                    <form role="searchFrom" >
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label for="areaCode">地址编码:</label>
+                                <input type="text" class="form-control " id="areaCode" placeholder="请输入地址编码" ng-model="searchItem.areaCode" >
+                            </div>
+                            <div class="form-group">
+                                <label for="areaName">地址名称:</label>
+                                <input type="text" class="form-control input-sm" id="areaName" placeholder="请输入地址名称" ng-model="searchItem.areaName" >
+                            </div>
+                            <div class="form-group">
+                                <label for="areaLevel">级别:</label>
+                                <select class="form-control" id="areaLevel" ng-model="searchItem.areaLevel" placeholder="请选择地址级别"  style="width: 150px">
+                                    <option value="1">省</option>
+                                    <option value="2">地区/区级市</option>
+                                    <option value="2">县/县级市</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary " data-ng-click="search()"  ng-keyup="enterEvent($event)" > <span class="fa fa-search"></span> 查找</button>
+                                <button class="btn btn-default " data-ng-click="reset()"  >重置</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </header>
+
+            <div class="main-box-body clearfix">
+
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered" width="100%" id="grid-table">
+                        <thead>
+                            <tr>
+                                <th colspan="9">
+                                    <button class="btn btn-primary" data-ng-click="open()">添加地址</button>
+                                    <button class="btn btn-danger" data-ng-click="batchRemove()"><span class="fa fa-trash-o"></span>批量删除</button>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" width="2%"><input type="checkbox" ng-model="selectAll"/></th>
+                                <th class="text-center" width="3%">序号</th>
+                                <th class="text-center" width="10%">
+                                    地市编码
+                                </th>
+                                <th class="text-center" width="20%">
+                                    地市名称
+                                </th>
+                                <th class="text-center" width="20%">
+                                    地市名称拼音
+                                </th>
+                                <th class="text-center" width="10%">
+                                   地市名称简称
+                                </th>
+
+                                <th class="text-center" width="10%">
+                                    行政级别
+                                </th>
+                                <th class="text-center" width="10%">
+                                    父级地市编码
+                                </th>
+                                <th class="text-center" width="10%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in list" >
+                                <td class="text-center"  width="2%">
+                                    <input type="checkbox" value="{{item.areaCode}}" data-ng-click="select(item.areaCode)" ng-checked="selectAll"/>
+                                </td>
+                                <td class="text-center"  width="3%">
+                                    {{$index+1}}
+                                </td>
+                                <td class="text-center" widtd="10%">
+                                    {{item.areaCode}}
+                                </td>
+                                <td class="text-center" widtd="20%">
+                                    {{item.areaName}}
+                                </td>
+                                <td class="text-center" widtd="20%">
+                                    {{item.areaNamePy}}
+                                </td>
+                                <td class="text-center" widtd="10%">
+                                   {{item.areaNameShort}}
+                                </td>
+
+                                <td class="text-center" widtd="10%">
+                                    <span ng-if="item.areaLevel==1">
+                                           省
+                                    </span>
+                                    <span ng-if="item.areaLevel==2">
+                                           地区/区级市
+                                    </span>
+                                    <span ng-if="item.areaLevel==3">
+                                           县/县级市
+                                    </span>
+
+                                </td>
+                                <td class="text-center" widtd="10%">
+                                    <span>{{item.parentAreaCode}}</span>
+                                </td>
+                                <td class="text-center"  width="10%">
+
+                                    <a href="javascript:void(0);" class="table-link" data-ng-click="get(item.areaCode,1)" >
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                    </a>
+                                    <a href="javascript:void(0);" class="table-link" data-ng-click="get(item.areaCode,2)">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                    </a>
+                                    <a href="javascript:void(0);" class="table-link danger" data-ng-click="remove(item.areaCode)">
+                                            <span class="fa-stack danger">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 分页控件指令 -->
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+

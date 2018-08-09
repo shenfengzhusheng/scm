@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data name="初始数据">
+	<organizations name="机构">
+		<organization id="0" name="美的集团" address="顺德北滘镇美的大道" code="机构编号"  poid="0" />
+		<organization id="0" name="美的制冷设备有限公司" address="顺德北滘镇" code="机构编号"  poid="1" />
+		<organization id="0" name="美的厨房电器有限公司" address="顺德北滘镇" code="机构编号"  poid="1"   />
+	</organizations>
+
+	<depts name="部门">
+		<dept  code="d00001" name="总经办"  />
+		<dept  code="d00002" name="流程IT"  />
+	</depts>
+
+	<roles name="角色">
+		<role id="1" name="超级管理员" memo="拥有系统所有权限"  />
+		<role id="2" name="admin" memo="管理员"  />
+		<role id="3" name="Guest" memo="只有查看权限" />
+		<role id="4" name="test" memo="test权限" />
+	</roles>
+	<users name="用户">
+		<user id="1" userCode="fengling9874"  pwd="376584" userName="神风逐胜" sex="1"  />
+		<user id="2" userCode="admin" pwd="123456" userName="admin" sex="1"  />
+		<user id="3" userCode="test" pwd="123456" userName="test" sex="1"  />
+		<user id="4" userCode="sat" pwd="123456" userName="admin2" sex="1"  />
+		<user id="5" userCode="fengling898"  pwd="123456" userName="神风逐胜" sex="1"  />
+
+	</users>
+
+	<users_roles name="用户和角色对应关系">
+		<user id="1" loginname="fengling9874">
+			<role id="1" name="超级管理员" />
+			<role id="2" name="admin" />
+			<role id="3" name="test" />
+		</user>
+		<user id="2" loginname="admin">
+			<role id="2" name="admin" />
+		</user>
+		<user id="3" loginname="test">
+			<role id="3" name="test" />
+		</user>
+		<user id="5" loginname="fengling898">
+			<role id="2" name="admin" />
+			<role id="3" name="test" />
+		</user>
+	</users_roles>
+
+	<resources name="资源">
+		<resource id="xtgl" name="系统管理" url="/welcome.jsp" memo="管理系统的资源、角色、机构、用户等信息" seq="0" iconCls="ext-icon-application_view_tile">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="zygl" name="资源管理" url="/jsp/sys/resource/resource.jsp" memo="管理系统的资源" seq="1" iconCls="ext-icon-newspaper_link" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="zylb" name="资源列表" url="/rest/sys/resource/treeGrid.do" memo="查询资源" seq="0" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zytj" name="添加资源" url="/rest/sys/resource/save.do" memo="添加资源" seq="1" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zybj" name="编辑资源" url="/rest/sys/resource/modify.do" memo="编辑资源" seq="2" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zysc" name="删除资源" url="/rest/sys/resource/delete.do" memo="删除资源" seq="3" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zyck" name="查看资源" url="/rest/sys/resource/info.do" memo="查看资源" seq="4" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jsgl" name="角色管理" url="/jsp/sys/role/role.jsp" memo="管理系统中用户的角色" seq="2" iconCls="ext-icon-tux" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="jslb" name="角色列表" url="/rest/sys/role/grid.do" memo="查询角色列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jstj" name="添加角色" url="/rest/sys/role/save.do" memo="添加角色" seq="1" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jsbj" name="编辑角色" url="/rest/sys/role/modify.do" memo="编辑角色" seq="2" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jssc" name="删除角色" url="/rest/sys/role/delete.do" memo="删除角色" seq="3" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jsck" name="查看角色" url="/rest/sys/role/info.do" memo="查看角色" seq="4" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jssq" name="角色授权" url="/rest/sys/role/grant.do" memo="角色授权" seq="5" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="jggl" name="机构管理" url="/jsp/sys/organization/organization.jsp" memo="管理系统中用户的机构" seq="3" iconCls="ext-icon-group_link" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="jglb" name="机构列表" url="/rest/sys/organization/treeGrid.do" memo="查询机构列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgtj" name="添加机构" url="/rest/sys/organization/save.do" memo="添加机构" seq="1" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgbj" name="编辑机构" url="/rest/sys/organization/modify.do" memo="编辑机构" seq="2" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgsc" name="删除机构" url="/rest/sys/organization/delete.do" memo="删除机构" seq="3" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgck" name="查看机构" url="/rest/sys/organization/info.do" memo="查看机构" seq="4" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgsq" name="机构授权" url="/rest/sys/organization/grant.do" memo="机构授权" seq="5" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="bmgl" name="部门管理" url="/jsp/sys/dept/dept.jsp" memo="管理机构的部门" seq="4" iconCls="ext-icon-newspaper_link" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="bmlb" name="部门列表" url="/rest/sys/dept/grid.do" memo="查询部门" seq="0" iconCls="ext-icon-bullet_wrench" pid="bmgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="bmtj" name="添加部门" url="/rest/sys/dept/save.do" memo="添加部门" seq="1" iconCls="ext-icon-bullet_wrench" pid="bmgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="bmbj" name="编辑部门" url="/rest/sys/dept/modify.do" memo="编辑部门" seq="2" iconCls="ext-icon-bullet_wrench" pid="bmgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="bmsc" name="删除部门" url="/rest/sys/dept/delete.do" memo="删除部门" seq="3" iconCls="ext-icon-bullet_wrench" pid="bmgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="bmck" name="查看部门" url="/rest/sys/dept/info.do" memo="查看部门" seq="4" iconCls="ext-icon-bullet_wrench" pid="bmgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="yhgl" name="用户管理" url="/jsp/sys/user/user.jsp" memo="管理系统中用户的用户" seq="5" iconCls="ext-icon-user_suit" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="yhlb" name="用户列表" url="/rest/sys/user/grid.do" memo="查询用户列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhtj" name="添加用户" url="/rest/sys/user/add.do" memo="添加用户" seq="1" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhbj" name="编辑用户" url="/rest/sys/user/modify.do" memo="编辑用户" seq="2" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhsc" name="删除用户" url="/rest/sys/user/delete.do" memo="删除用户" seq="3" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhck" name="查看用户" url="/rest/sys/user/info.do" memo="查看用户" seq="4" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhjs" name="用户角色" url="/rest/sys/user/grantRole.do" memo="编辑用户角色" seq="5" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhjg" name="用户机构" url="/rest/sys/user/grantOrganization.do" memo="编辑用户机构" seq="6" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="xtjk" name="系统监控" url="/welcome.jsp" memo="监控系统运行情况等信息" seq="1" iconCls="ext-icon-monitor">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="monitoring" name="项目监控" url="/monitoring" memo="监控项目" seq="1" iconCls="ext-icon-monitor_error" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="druid" name="数据源监控" url="/druid" memo="监控数据源" seq="2" iconCls="ext-icon-monitor_link" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="xtbb" name="系统报表" url="/welcome.jsp" memo="查看系统相关报表图标" seq="2" iconCls="ext-icon-chart_curve">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+	</resources>
+
+	<roles_resources name="角色和资源对应关系">
+		<role id="1" name="超级管理员">
+			<resource id="zygl" name="资源管理" />
+			<resource id="zylb" name="资源列表" />
+			<resource id="zytj" name="添加资源" />
+			<resource id="zybj" name="编辑资源" />
+			<resource id="zysc" name="删除资源" />
+			<resource id="zyck" name="查看资源" />
+
+			<resource id="jsgl" name="角色管理" />
+			<resource id="jslb" name="角色列表" />
+			<resource id="jstj" name="添加角色" />
+			<resource id="jsbj" name="编辑角色" />
+			<resource id="jssc" name="删除角色" />
+			<resource id="jsck" name="查看角色" />
+			<resource id="jssq" name="角色授权" />
+
+			<resource id="jggl" name="机构管理" />
+			<resource id="jglb" name="机构列表" />
+			<resource id="jgtj" name="添加机构" />
+			<resource id="jgbj" name="编辑机构" />
+			<resource id="jgsc" name="删除机构" />
+			<resource id="jgck" name="查看机构" />
+			<resource id="jgsq" name="机构授权" />
+
+			<resource id="bmgl" name="部门管理" />
+			<resource id="bmlb" name="部门列表" />
+			<resource id="bmtj" name="添加部门" />
+			<resource id="bmbj" name="编辑部门" />
+			<resource id="bmsc" name="删除部门" />
+			<resource id="bmck" name="查看部门" />
+
+			<resource id="yhgl" name="用户管理" />
+			<resource id="yhlb" name="用户列表" />
+			<resource id="yhtj" name="添加用户" />
+			<resource id="yhbj" name="编辑用户" />
+			<resource id="yhsc" name="删除用户" />
+			<resource id="yhck" name="查看用户" />
+			<resource id="yhjs" name="用户角色" />
+
+			<resource id="yhjg" name="用户机构" />
+			<resource id="xtjk" name="系统监控" />
+
+			<resource id="monitoring" name="项目监控" />
+			<resource id="druid" name="数据源监控" />
+		</role>
+		<role id="2" name="Guest角色">
+			<resource id="xtgl" name="系统管理" />
+
+			<resource id="zygl" name="资源管理" />
+			<resource id="zylb" name="资源列表" />
+			<resource id="zyck" name="查看资源" />
+
+			<resource id="jsgl" name="角色管理" />
+			<resource id="jslb" name="角色列表" />
+			<resource id="jsck" name="查看角色" />
+
+			<resource id="jggl" name="机构管理" />
+			<resource id="jglb" name="机构列表" />
+			<resource id="jgck" name="查看机构" />
+
+			<resource id="yhgl" name="用户管理" />
+			<resource id="yhlb" name="用户列表" />
+			<resource id="yhck" name="查看用户" />
+		</role>
+
+
+	</roles_resources>
+
+</data>

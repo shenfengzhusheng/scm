@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mybatis-comment-generator" />
+        <module name="scm-api" />
+        <module name="scm-cache" />
+        <module name="scm-cas" />
+        <module name="scm-cloud" />
+        <module name="scm-common" />
+        <module name="scm-crm" />
+        <module name="scm-data" />
+        <module name="scm-dubbo-api" />
+        <module name="scm-goods" />
+        <module name="scm-managers-entity" />
+        <module name="scm-managers-mapper" />
+        <module name="scm-managers-service" />
+        <module name="scm-managers-web" />
+        <module name="scm-message" />
+        <module name="scm-mobile" />
+        <module name="scm-mq" />
+        <module name="scm-netty" />
+        <module name="scm-oms" />
+        <module name="scm-pay" />
+        <module name="scm-platform" />
+        <module name="scm-protal" />
+        <module name="scm-rpc-provider" />
+        <module name="scm-study" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mybatis-comment-generator" target="1.8" />
+      <module name="scm" target="1.8" />
+      <module name="scm-api" target="1.8" />
+      <module name="scm-cache" target="1.8" />
+      <module name="scm-cas" target="1.8" />
+      <module name="scm-cloud" target="1.8" />
+      <module name="scm-common" target="1.8" />
+      <module name="scm-crm" target="1.8" />
+      <module name="scm-data" target="1.8" />
+      <module name="scm-dubbo-api" target="1.8" />
+      <module name="scm-goods" target="1.8" />
+      <module name="scm-managers" target="1.8" />
+      <module name="scm-managers-entity" target="1.8" />
+      <module name="scm-managers-mapper" target="1.8" />
+      <module name="scm-managers-service" target="1.8" />
+      <module name="scm-managers-web" target="1.8" />
+      <module name="scm-message" target="1.8" />
+      <module name="scm-mobile" target="1.8" />
+      <module name="scm-mq" target="1.8" />
+      <module name="scm-netty" target="1.8" />
+      <module name="scm-oms" target="1.8" />
+      <module name="scm-pay" target="1.8" />
+      <module name="scm-platform" target="1.8" />
+      <module name="scm-protal" target="1.8" />
+      <module name="scm-rpc-provider" target="1.8" />
+      <module name="scm-study" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

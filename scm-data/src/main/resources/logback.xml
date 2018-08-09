@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_ROOT" value="d:/logs/scm-data"></property>
+	<!-- 日志输出到控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{90} - %msg%n
+			</Pattern>
+
+		</layout>
+	</appender>
+
+	<!-- 错误日志 -->
+	<appender name="error"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<file>${LOG_ROOT}/qht-error.log</file>
+		<rollingPolicy
+				class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_ROOT}/qht-error.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{MM-dd HH:mm:ss} [%t][%p][%c.%M\(\):%L] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 业务日志 -->
+	<appender name="info"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_ROOT}/qht-info.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_ROOT}/qht-info.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%thread] %d{MM-dd HH:mm:ss} %-5level %-4relative %logger{0} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 警告日志 -->
+	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<file>${LOG_ROOT}/qht-debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_ROOT}/qht-debug.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%thread] %d{MM-dd HH:mm:ss} %-5level %-4relative %logger{0} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<logger name="org.springframework" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<!--业务包的全路径 -->
+	<logger name="org.xfs.scm.data" level="debug" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<!--业务包的全路径 -->
+	<logger name="com.alibaba.dubbo.common.logger" level="error" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+
+	<!--架构包全路径 -->
+	<logger name="org.xfs.scm.plateform" level="debug" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="all"/>
+		<appender-ref ref="debug" />
+		<appender-ref ref="info" />
+		<appender-ref ref="error"/>
+	</root>
+
+</configuration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mybatis-comment-generator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-cache" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-cas" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-cloud" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-crm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-data" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-dubbo-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-goods" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-managers" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-managers/scm-managers-entity" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-managers/scm-managers-mapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-managers/scm-managers-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-managers/scm-managers-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-message" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-mobile" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-mq" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-netty" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-oms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-pay" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-platform" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-protal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-rpc-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/scm-study" charset="UTF-8" />
+  </component>
+</project>

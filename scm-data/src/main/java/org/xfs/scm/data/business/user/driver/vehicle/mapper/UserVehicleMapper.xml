@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.driver.vehicle.mapper.UserVehicleMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.driver.vehicle.po.UserVehicle" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+    <result column="driver_license_num" property="driverLicenseNum" jdbcType="VARCHAR" />
+    <result column="driver_license_url" property="driverLicenseUrl" jdbcType="VARCHAR" />
+    <result column="driver_license_audit" property="driverLicenseAudit" jdbcType="INTEGER" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="audit_mid" property="auditMid" jdbcType="BIGINT" />
+    <result column="vechile_lisense_url" property="vechileLisenseUrl" jdbcType="VARCHAR" />
+    <result column="vehicle_type" property="vehicleType" jdbcType="INTEGER" />
+    <result column="vehicle_own_name" property="vehicleOwnName" jdbcType="VARCHAR" />
+    <result column="vehicle_num" property="vehicleNum" jdbcType="VARCHAR" />
+    <result column="vehicle_length" property="vehicleLength" jdbcType="INTEGER" />
+    <result column="vehicle_capacity" property="vehicleCapacity" jdbcType="INTEGER" />
+    <result column="vehicle_volume" property="vehicleVolume" jdbcType="INTEGER" />
+    <result column="vehicle_carriage_length" property="vehicleCarriageLength" jdbcType="INTEGER" />
+    <result column="vehicle_carriage_width" property="vehicleCarriageWidth" jdbcType="INTEGER" />
+    <result column="vehicle_carriage_high" property="vehicleCarriageHigh" jdbcType="INTEGER" />
+    <result column="last_longitude" property="lastLongitude" jdbcType="DOUBLE" />
+    <result column="last_latitude" property="lastLatitude" jdbcType="DOUBLE" />
+    <result column="last_address" property="lastAddress" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+    <result column="vehicle_status" property="vehicleStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, driver_user_id, driver_license_num, driver_license_url, driver_license_audit, 
+    audit_remark, audit_mid, vechile_lisense_url, vehicle_type, vehicle_own_name, vehicle_num, 
+    vehicle_length, vehicle_capacity, vehicle_volume, vehicle_carriage_length, vehicle_carriage_width, 
+    vehicle_carriage_high, last_longitude, last_latitude, last_address, last_update_time, 
+    vehicle_status, create_time, update_time
+  </sql>
+  <select id="getUserVehicles" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.driver.vehicle.vo.UserVehicleVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="removeUserVehicle" parameterType="org.xfs.scm.data.business.user.driver.vehicle.vo.UserVehicleVo" >
+    delete from tb_user_vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.user.driver.vehicle.entity.UserVehicle" >-->
+    <!--insert into tb_user_vehicle (id, driver_user_id, driver_license_num, -->
+      <!--driver_license_url, driver_license_audit, audit_remark, -->
+      <!--audit_mid, vechile_lisense_url, vehicle_type, -->
+      <!--vehicle_own_name, vehicle_num, vehicle_length, -->
+      <!--vehicle_capacity, vehicle_volume, vehicle_carriage_length, -->
+      <!--vehicle_carriage_width, vehicle_carriage_high, -->
+      <!--last_longitude, last_latitude, last_address, -->
+      <!--last_update_time, vehicle_status, create_time, -->
+      <!--update_time)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{driverUserId,jdbcType=BIGINT}, #{driverLicenseNum,jdbcType=VARCHAR}, -->
+      <!--#{driverLicenseUrl,jdbcType=VARCHAR}, #{driverLicenseAudit,jdbcType=INTEGER}, #{auditRemark,jdbcType=VARCHAR}, -->
+      <!--#{auditMid,jdbcType=BIGINT}, #{vechileLisenseUrl,jdbcType=VARCHAR}, #{vehicleType,jdbcType=INTEGER}, -->
+      <!--#{vehicleOwnName,jdbcType=VARCHAR}, #{vehicleNum,jdbcType=VARCHAR}, #{vehicleLength,jdbcType=INTEGER}, -->
+      <!--#{vehicleCapacity,jdbcType=INTEGER}, #{vehicleVolume,jdbcType=INTEGER}, #{vehicleCarriageLength,jdbcType=INTEGER}, -->
+      <!--#{vehicleCarriageWidth,jdbcType=INTEGER}, #{vehicleCarriageHigh,jdbcType=INTEGER}, -->
+      <!--#{lastLongitude,jdbcType=DOUBLE}, #{lastLatitude,jdbcType=DOUBLE}, #{lastAddress,jdbcType=VARCHAR}, -->
+      <!--#{lastUpdateTime,jdbcType=TIMESTAMP}, #{vehicleStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, -->
+      <!--#{updateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addUserVehicle" parameterType="org.xfs.scm.data.business.user.driver.vehicle.vo.UserVehicleVo" >
+    insert into tb_user_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id,
+      </if>
+      <if test="driverLicenseNum != null" >
+        driver_license_num,
+      </if>
+      <if test="driverLicenseUrl != null" >
+        driver_license_url,
+      </if>
+      <if test="driverLicenseAudit != null" >
+        driver_license_audit,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+      <if test="auditMid != null" >
+        audit_mid,
+      </if>
+      <if test="vechileLisenseUrl != null" >
+        vechile_lisense_url,
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type,
+      </if>
+      <if test="vehicleOwnName != null" >
+        vehicle_own_name,
+      </if>
+      <if test="vehicleNum != null" >
+        vehicle_num,
+      </if>
+      <if test="vehicleLength != null" >
+        vehicle_length,
+      </if>
+      <if test="vehicleCapacity != null" >
+        vehicle_capacity,
+      </if>
+      <if test="vehicleVolume != null" >
+        vehicle_volume,
+      </if>
+      <if test="vehicleCarriageLength != null" >
+        vehicle_carriage_length,
+      </if>
+      <if test="vehicleCarriageWidth != null" >
+        vehicle_carriage_width,
+      </if>
+      <if test="vehicleCarriageHigh != null" >
+        vehicle_carriage_high,
+      </if>
+      <if test="lastLongitude != null" >
+        last_longitude,
+      </if>
+      <if test="lastLatitude != null" >
+        last_latitude,
+      </if>
+      <if test="lastAddress != null" >
+        last_address,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="vehicleStatus != null" >
+        vehicle_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="driverUserId != null" >
+        #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseNum != null" >
+        #{driverLicenseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseUrl != null" >
+        #{driverLicenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseAudit != null" >
+        #{driverLicenseAudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMid != null" >
+        #{auditMid,jdbcType=BIGINT},
+      </if>
+      <if test="vechileLisenseUrl != null" >
+        #{vechileLisenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null" >
+        #{vehicleType,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleOwnName != null" >
+        #{vehicleOwnName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNum != null" >
+        #{vehicleNum,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleLength != null" >
+        #{vehicleLength,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCapacity != null" >
+        #{vehicleCapacity,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleVolume != null" >
+        #{vehicleVolume,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageLength != null" >
+        #{vehicleCarriageLength,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageWidth != null" >
+        #{vehicleCarriageWidth,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageHigh != null" >
+        #{vehicleCarriageHigh,jdbcType=INTEGER},
+      </if>
+      <if test="lastLongitude != null" >
+        #{lastLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLatitude != null" >
+        #{lastLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="lastAddress != null" >
+        #{lastAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vehicleStatus != null" >
+        #{vehicleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyUserVehicle" parameterType="org.xfs.scm.data.business.user.driver.vehicle.vo.UserVehicleVo" >
+    update tb_user_vehicle
+    <set >
+      <if test="driverUserId != null" >
+        driver_user_id = #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="driverLicenseNum != null" >
+        driver_license_num = #{driverLicenseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseUrl != null" >
+        driver_license_url = #{driverLicenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseAudit != null" >
+        driver_license_audit = #{driverLicenseAudit,jdbcType=INTEGER},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMid != null" >
+        audit_mid = #{auditMid,jdbcType=BIGINT},
+      </if>
+      <if test="vechileLisenseUrl != null" >
+        vechile_lisense_url = #{vechileLisenseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type = #{vehicleType,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleOwnName != null" >
+        vehicle_own_name = #{vehicleOwnName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNum != null" >
+        vehicle_num = #{vehicleNum,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleLength != null" >
+        vehicle_length = #{vehicleLength,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCapacity != null" >
+        vehicle_capacity = #{vehicleCapacity,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleVolume != null" >
+        vehicle_volume = #{vehicleVolume,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageLength != null" >
+        vehicle_carriage_length = #{vehicleCarriageLength,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageWidth != null" >
+        vehicle_carriage_width = #{vehicleCarriageWidth,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleCarriageHigh != null" >
+        vehicle_carriage_high = #{vehicleCarriageHigh,jdbcType=INTEGER},
+      </if>
+      <if test="lastLongitude != null" >
+        last_longitude = #{lastLongitude,jdbcType=DOUBLE},
+      </if>
+      <if test="lastLatitude != null" >
+        last_latitude = #{lastLatitude,jdbcType=DOUBLE},
+      </if>
+      <if test="lastAddress != null" >
+        last_address = #{lastAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vehicleStatus != null" >
+        vehicle_status = #{vehicleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

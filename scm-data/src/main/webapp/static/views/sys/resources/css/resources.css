@@ -1,0 +1,43 @@
+ul.tree-view, .tree-view ul{
+    list-style: none;
+}
+.tree-view .node-item{
+    display: inline-block;
+}
+
+.tree-view .text-field{
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}
+
+.tree-view .text-field:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}
+.tree-view .text-field:focus{
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}
+.tree-view .check-box{
+    width: 24px;
+    height: 18px;
+    border-radius: 8px;
+}
+
+.tree-view .toolbar{
+    display:inline-block;
+}
+.tree-view .toolbar .btn{
+    padding: 0px;
+}
+
+.tree-view .toolbar .add{
+    color: #FF0000;
+}
+
+.tree-view .toolbar .remove{
+    color: #FF0000;
+}

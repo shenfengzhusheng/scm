@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.basic.areacode.mapper.AreaMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.basic.areacode.po.Area" >
+    <id column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="area_name_py" property="areaNamePy" jdbcType="VARCHAR" />
+    <result column="area_name_short" property="areaNameShort" jdbcType="VARCHAR" />
+    <result column="area_level" property="areaLevel" jdbcType="INTEGER" />
+    <result column="parent_area_code" property="parentAreaCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area_code, area_name, area_name_py, area_name_short, area_level, parent_area_code
+  </sql>
+  <select id="getAreas" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.basic.areacode.vo.AreaVo" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM tb_area_code
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="areaName!=null and areaName!='' ">
+          AND area_name = #{areaName,jdbcType=VARCHAR}
+        </if>
+       <if test="areaCode!=null and areaCode!='' ">
+          AND area_code = #{areaCode,jdbcType=VARCHAR}
+       </if>
+      <if test="parentAreaCode!=null and parentAreaCode!=0 ">
+          AND parent_area_code = #{parentAreaCode,jdbcType=VARCHAR}
+      </if>
+      <if test="areaLevel!=null">
+         AND area_level = #{areaLevel,jdbcType=INTEGER}
+      </if>
+      <if test="areaLevelWithOpt!=null">
+        AND area_level != 3
+      </if>
+    </trim>
+  </select>
+  <delete id="removeArea" parameterType="org.xfs.scm.data.business.basic.areacode.po.Area" >
+    DELETE FROM tb_area  WHERE area_code = #{areaCode,jdbcType=VARCHAR}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.basic.areacodecode.entity.Area" >
+    insert into tb_area (area_code, area_name, area_name_py, 
+      area_name_short, area_level, parent_area_code
+      )
+    values (#{areaCode,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{areaNamePy,jdbcType=VARCHAR}, 
+      #{areaNameShort,jdbcType=VARCHAR}, #{areaLevel,jdbcType=INTEGER}, #{parentAreaCode,jdbcType=VARCHAR}
+      )
+  </insert>-->
+  <insert id="addArea" parameterType="org.xfs.scm.data.business.basic.areacode.po.Area" >
+    INSERT INTO tb_area_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="areaNamePy != null" >
+        area_name_py,
+      </if>
+      <if test="areaNameShort != null" >
+        area_name_short,
+      </if>
+      <if test="areaLevel != null" >
+        area_level,
+      </if>
+      <if test="parentAreaCode != null" >
+        parent_area_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaNamePy != null" >
+        #{areaNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="areaNameShort != null" >
+        #{areaNameShort,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null" >
+        #{areaLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentAreaCode != null" >
+        #{parentAreaCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="modifyArea" parameterType="org.xfs.scm.data.business.basic.areacode.po.Area" >
+    UPDATE tb_area_code
+    <set >
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaNamePy != null" >
+        area_name_py = #{areaNamePy,jdbcType=VARCHAR},
+      </if>
+      <if test="areaNameShort != null" >
+        area_name_short = #{areaNameShort,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null" >
+        area_level = #{areaLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentAreaCode != null" >
+        parent_area_code = #{parentAreaCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE area_code = #{areaCode,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

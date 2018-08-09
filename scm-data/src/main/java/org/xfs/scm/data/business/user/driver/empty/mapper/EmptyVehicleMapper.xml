@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.driver.empty.mapper.EmptyVehicleMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.driver.empty.po.EmptyVehicle" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="liner_id" property="linerId" jdbcType="BIGINT" />
+    <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+    <result column="liner_type" property="linerType" jdbcType="INTEGER" />
+    <result column="share_type" property="shareType" jdbcType="INTEGER" />
+    <result column="addr_area_code" property="addrAreaCode" jdbcType="VARCHAR" />
+    <result column="addr_area_name" property="addrAreaName" jdbcType="VARCHAR" />
+    <result column="left_space_per" property="leftSpacePer" jdbcType="INTEGER" />
+    <result column="vehicle_type" property="vehicleType" jdbcType="INTEGER" />
+    <result column="vehicle_length" property="vehicleLength" jdbcType="INTEGER" />
+    <result column="empty_vehicle_status" property="emptyVehicleStatus" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, liner_id, driver_user_id, liner_type, share_type, addr_area_code, addr_area_name, 
+    left_space_per, vehicle_type, vehicle_length, empty_vehicle_status, start_time, remark, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_busi_empty_vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_busi_empty_vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="org.xfs.scm.data.business.user.driver.empty.po.EmptyVehicle" >
+    insert into tb_busi_empty_vehicle (id, liner_id, driver_user_id, 
+      liner_type, share_type, addr_area_code, 
+      addr_area_name, left_space_per, vehicle_type, 
+      vehicle_length, empty_vehicle_status, start_time, 
+      remark, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{linerId,jdbcType=BIGINT}, #{driverUserId,jdbcType=BIGINT}, 
+      #{linerType,jdbcType=INTEGER}, #{shareType,jdbcType=INTEGER}, #{addrAreaCode,jdbcType=VARCHAR}, 
+      #{addrAreaName,jdbcType=VARCHAR}, #{leftSpacePer,jdbcType=INTEGER}, #{vehicleType,jdbcType=INTEGER}, 
+      #{vehicleLength,jdbcType=INTEGER}, #{emptyVehicleStatus,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.xfs.scm.data.business.user.driver.empty.po.EmptyVehicle" >
+    insert into tb_busi_empty_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="linerId != null" >
+        liner_id,
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id,
+      </if>
+      <if test="linerType != null" >
+        liner_type,
+      </if>
+      <if test="shareType != null" >
+        share_type,
+      </if>
+      <if test="addrAreaCode != null" >
+        addr_area_code,
+      </if>
+      <if test="addrAreaName != null" >
+        addr_area_name,
+      </if>
+      <if test="leftSpacePer != null" >
+        left_space_per,
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type,
+      </if>
+      <if test="vehicleLength != null" >
+        vehicle_length,
+      </if>
+      <if test="emptyVehicleStatus != null" >
+        empty_vehicle_status,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="linerId != null" >
+        #{linerId,jdbcType=BIGINT},
+      </if>
+      <if test="driverUserId != null" >
+        #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="linerType != null" >
+        #{linerType,jdbcType=INTEGER},
+      </if>
+      <if test="shareType != null" >
+        #{shareType,jdbcType=INTEGER},
+      </if>
+      <if test="addrAreaCode != null" >
+        #{addrAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addrAreaName != null" >
+        #{addrAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="leftSpacePer != null" >
+        #{leftSpacePer,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleType != null" >
+        #{vehicleType,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleLength != null" >
+        #{vehicleLength,jdbcType=INTEGER},
+      </if>
+      <if test="emptyVehicleStatus != null" >
+        #{emptyVehicleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.xfs.scm.data.business.user.driver.empty.po.EmptyVehicle" >
+    update tb_busi_empty_vehicle
+    <set >
+      <if test="linerId != null" >
+        liner_id = #{linerId,jdbcType=BIGINT},
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id = #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="linerType != null" >
+        liner_type = #{linerType,jdbcType=INTEGER},
+      </if>
+      <if test="shareType != null" >
+        share_type = #{shareType,jdbcType=INTEGER},
+      </if>
+      <if test="addrAreaCode != null" >
+        addr_area_code = #{addrAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addrAreaName != null" >
+        addr_area_name = #{addrAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="leftSpacePer != null" >
+        left_space_per = #{leftSpacePer,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type = #{vehicleType,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleLength != null" >
+        vehicle_length = #{vehicleLength,jdbcType=INTEGER},
+      </if>
+      <if test="emptyVehicleStatus != null" >
+        empty_vehicle_status = #{emptyVehicleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.xfs.scm.data.business.user.driver.empty.po.EmptyVehicle" >
+    update tb_busi_empty_vehicle
+    set liner_id = #{linerId,jdbcType=BIGINT},
+      driver_user_id = #{driverUserId,jdbcType=BIGINT},
+      liner_type = #{linerType,jdbcType=INTEGER},
+      share_type = #{shareType,jdbcType=INTEGER},
+      addr_area_code = #{addrAreaCode,jdbcType=VARCHAR},
+      addr_area_name = #{addrAreaName,jdbcType=VARCHAR},
+      left_space_per = #{leftSpacePer,jdbcType=INTEGER},
+      vehicle_type = #{vehicleType,jdbcType=INTEGER},
+      vehicle_length = #{vehicleLength,jdbcType=INTEGER},
+      empty_vehicle_status = #{emptyVehicleStatus,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

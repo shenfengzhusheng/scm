@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.crm.company.mapper.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.crm.company.entity.Company" >
+    <id column="com_id" property="comId" jdbcType="BIGINT" />
+    <result column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="provice" property="provice" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="bill_time" property="billTime" jdbcType="INTEGER" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="accounts" property="accounts" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="reg_addr" property="regAddr" jdbcType="VARCHAR" />
+    <result column="licence" property="licence" jdbcType="VARCHAR" />
+    <result column="alone_tax" property="aloneTax" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="band_addr" property="bandAddr" jdbcType="VARCHAR" />
+    <result column="reg_name" property="regName" jdbcType="VARCHAR" />
+    <result column="sms" property="sms" jdbcType="INTEGER" />
+    <result column="store_type" property="storeType" jdbcType="INTEGER" />
+    <result column="is_seller" property="isSeller" jdbcType="INTEGER" />
+    <result column="is_carry" property="isCarry" jdbcType="INTEGER" />
+    <result column="is_goods_ower" property="isGoodsOwer" jdbcType="INTEGER" />
+    <result column="wcom_id" property="wcomId" jdbcType="INTEGER" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tc.com_id, tc.bill_id, tc.sname, tc.name, tc.cust_name, tc.country, tc.provice, tc.area, tc.city, tc.addr, tc.zipcode,
+    tc.linkman, tc.tel, tc.bill_time, tc.bank, tc.accounts, tc.email, tc.fax, tc.reg_addr, tc.licence, tc.alone_tax,
+    tc.status, tc.band_addr, tc.reg_name, tc.sms, tc.store_type, tc.is_seller, tc.is_carry, tc.is_goods_ower,
+    tc.wcom_id, tc.created_by, tc.created_time, tc.last_update_by, tc.last_update_time
+  </sql>
+  <select id="getCompanys" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.crm.company.vo.CompanyVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_company tc
+    <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="comId!=null and comId!=''">
+        AND tc.com_id = #{comId,jdbcType=BIGINT}
+      </if>
+      <if test="name!=null and name!=''">
+        AND tc.name  LIKE  CONCAT('%', #{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="q!=null">
+        AND tc.name  LIKE  CONCAT('%', #{q,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="sname!=null and sname!=''">
+        AND tc.sname  LIKE  CONCAT('%', #{sname,jdbcType=VARCHAR},'%')
+      </if>
+
+    </trim>
+  </select>
+  <delete id="removeCompany" parameterType="java.lang.Long" >
+    delete from tb_company
+    where com_id = #{comId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="addCompany" parameterType="org.xfs.scm.data.business.crm.company.vo.CompanyVo" >-->
+    <!--insert into tb_company (com_id, bill_id, sname, -->
+      <!--name, cust_name, country, -->
+      <!--provice, areacode, city, -->
+      <!--addr, zipcode, linkman, -->
+      <!--tel, bill_time, bank, -->
+      <!--accounts, email, fax, -->
+      <!--reg_addr, licence, alone_tax, -->
+      <!--status, band_addr, reg_name, -->
+      <!--sms, store_type, is_seller, -->
+      <!--is_carry, is_goods_ower, wcom_id, -->
+      <!--created_by, created_time, last_update_by, -->
+      <!--last_update_time)-->
+    <!--values (#{comId,jdbcType=BIGINT}, #{billId,jdbcType=BIGINT}, #{sname,jdbcType=VARCHAR}, -->
+      <!--#{name,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, -->
+      <!--#{provice,jdbcType=VARCHAR}, #{areacode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, -->
+      <!--#{addr,jdbcType=VARCHAR}, #{zipcode,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, -->
+      <!--#{tel,jdbcType=VARCHAR}, #{billTime,jdbcType=INTEGER}, #{bank,jdbcType=VARCHAR}, -->
+      <!--#{accounts,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, -->
+      <!--#{regAddr,jdbcType=VARCHAR}, #{licence,jdbcType=VARCHAR}, #{aloneTax,jdbcType=VARCHAR}, -->
+      <!--#{status,jdbcType=BIT}, #{bandAddr,jdbcType=VARCHAR}, #{regName,jdbcType=VARCHAR}, -->
+      <!--#{sms,jdbcType=INTEGER}, #{storeType,jdbcType=INTEGER}, #{isSeller,jdbcType=INTEGER}, -->
+      <!--#{isCarry,jdbcType=INTEGER}, #{isGoodsOwer,jdbcType=INTEGER}, #{wcomId,jdbcType=INTEGER}, -->
+      <!--#{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, -->
+      <!--#{lastUpdateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addCompany" parameterType="org.xfs.scm.data.business.crm.company.vo.CompanyVo" >
+    INSERT INTO tb_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        com_id,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="provice != null" >
+        provice,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="zipcode != null" >
+        zipcode,
+      </if>
+      <if test="linkman != null" >
+        linkman,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="billTime != null" >
+        bill_time,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="accounts != null" >
+        accounts,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="regAddr != null" >
+        reg_addr,
+      </if>
+      <if test="licence != null" >
+        licence,
+      </if>
+      <if test="aloneTax != null" >
+        alone_tax,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="bandAddr != null" >
+        band_addr,
+      </if>
+      <if test="regName != null" >
+        reg_name,
+      </if>
+      <if test="sms != null" >
+        sms,
+      </if>
+      <if test="storeType != null" >
+        store_type,
+      </if>
+      <if test="isSeller != null" >
+        is_seller,
+      </if>
+      <if test="isCarry != null" >
+        is_carry,
+      </if>
+      <if test="isGoodsOwer != null" >
+        is_goods_ower,
+      </if>
+      <if test="wcomId != null" >
+        wcom_id,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        #{comId,jdbcType=BIGINT},
+      </if>
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="provice != null" >
+        #{provice,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="billTime != null" >
+        #{billTime,jdbcType=INTEGER},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="accounts != null" >
+        #{accounts,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="regAddr != null" >
+        #{regAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="licence != null" >
+        #{licence,jdbcType=VARCHAR},
+      </if>
+      <if test="aloneTax != null" >
+        #{aloneTax,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="bandAddr != null" >
+        #{bandAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="regName != null" >
+        #{regName,jdbcType=VARCHAR},
+      </if>
+      <if test="sms != null" >
+        #{sms,jdbcType=INTEGER},
+      </if>
+      <if test="storeType != null" >
+        #{storeType,jdbcType=INTEGER},
+      </if>
+      <if test="isSeller != null" >
+        #{isSeller,jdbcType=INTEGER},
+      </if>
+      <if test="isCarry != null" >
+        #{isCarry,jdbcType=INTEGER},
+      </if>
+      <if test="isGoodsOwer != null" >
+        #{isGoodsOwer,jdbcType=INTEGER},
+      </if>
+      <if test="wcomId != null" >
+        #{wcomId,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyCompany" parameterType="org.xfs.scm.data.business.crm.company.vo.CompanyVo" >
+    update tb_company
+    <set >
+      <if test="billId != null" >
+        bill_id = #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="sname != null" >
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="provice != null" >
+        provice = #{provice,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="zipcode != null" >
+        zipcode = #{zipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="billTime != null" >
+        bill_time = #{billTime,jdbcType=INTEGER},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="accounts != null" >
+        accounts = #{accounts,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="regAddr != null" >
+        reg_addr = #{regAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="licence != null" >
+        licence = #{licence,jdbcType=VARCHAR},
+      </if>
+      <if test="aloneTax != null" >
+        alone_tax = #{aloneTax,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="bandAddr != null" >
+        band_addr = #{bandAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="regName != null" >
+        reg_name = #{regName,jdbcType=VARCHAR},
+      </if>
+      <if test="sms != null" >
+        sms = #{sms,jdbcType=INTEGER},
+      </if>
+      <if test="storeType != null" >
+        store_type = #{storeType,jdbcType=INTEGER},
+      </if>
+      <if test="isSeller != null" >
+        is_seller = #{isSeller,jdbcType=INTEGER},
+      </if>
+      <if test="isCarry != null" >
+        is_carry = #{isCarry,jdbcType=INTEGER},
+      </if>
+      <if test="isGoodsOwer != null" >
+        is_goods_ower = #{isGoodsOwer,jdbcType=INTEGER},
+      </if>
+      <if test="wcomId != null" >
+        wcom_id = #{wcomId,jdbcType=INTEGER},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where com_id = #{comId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

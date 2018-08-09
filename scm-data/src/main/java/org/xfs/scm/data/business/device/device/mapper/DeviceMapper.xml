@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.device.device.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.device.device.entity.Device" >
+    <id column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="device_name" property="deviceName" jdbcType="VARCHAR" />
+    <result column="device_alis" property="deviceAlis" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="network_model" property="networkModel" jdbcType="VARCHAR" />
+    <result column="device_lng" property="deviceLng" jdbcType="DECIMAL" />
+    <result column="lat" property="lat" jdbcType="DECIMAL" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="capacity" property="capacity" jdbcType="DECIMAL" />
+    <result column="last_capacity" property="lastCapacity" jdbcType="DECIMAL" />
+    <result column="device_state" property="deviceState" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.xfs.scm.data.business.device.device.entity.Device" extends="BaseResultMap" >
+    <result column="device_desc" property="deviceDesc" jdbcType="LONGVARBINARY" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithCustomer" type="org.xfs.scm.data.business.device.device.po.DevicePo" extends="ResultMapWithBLOBs" >
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    td.device_id, td.cust_id, td.device_code, td.device_name, td.device_alis, td.tags, td.device_type, td.version,
+    td.network_model, td.device_lng, td.lat, td.addr, td.length, td.width, td.height, td.capacity, td.last_capacity,
+    td.device_state, td.created_by, td.created_time, td.last_update_by, td.last_update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    td.device_desc
+  </sql>
+  <select id="getDevices" resultMap="ResultMapWithCustomer" parameterType="org.xfs.scm.data.business.device.device.vo.DeviceVo" >
+    SELECT
+      <include refid="Base_Column_List" />,
+      <include refid="Blob_Column_List" />
+    FROM tb_device td
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="deviceId!=null and deviceId!=0">
+          AND td.device_id = #{deviceId,jdbcType=BIGINT}
+        </if>
+        <if test="custId!=null and custId!=0">
+          AND td.cust_id = #{custId,jdbcType=BIGINT}
+        </if>
+      <if test="deviceCodeEq != null" >
+        AND td.device_code = #{deviceCode,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceCode != null" >
+         AND td.device_code LIKE CONCAT('%', #{deviceCode,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="deviceName != null" >
+        AND td.device_name LIKE CONCAT('%', #{deviceName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="deviceAlis != null" >
+        AND td.device_alis LIKE CONCAT('%',  #{deviceAlis,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="tags != null" >
+        AND td.tags = #{tags,jdbcType=VARCHAR}
+      </if>
+      <if test="deviceType != null" >
+        AND td.device_type = #{deviceType,jdbcType=VARCHAR}
+      </if>
+      <if test="version != null" >
+        AND td.version = #{version,jdbcType=VARCHAR}
+      </if>
+      <if test="networkModel != null" >
+        AND td.network_model = #{networkModel,jdbcType=VARCHAR}
+      </if>
+      <if test="capacity != null" >
+        AND td.capacity = #{capacity,jdbcType=DECIMAL}
+      </if>
+      <if test="lastCapacity != null" >
+        AND td.last_capacity = #{lastCapacity,jdbcType=DECIMAL}
+      </if>
+      <if test="deviceState != null" >
+        AND td.device_state = #{deviceState,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <delete id="removeDevice" parameterType="java.lang.Long" >
+    DELETE FROM tb_device WHERE device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.device.device.entity.Device" >-->
+    <!--insert into tb_device (device_id, cust_id, device_code, -->
+      <!--device_name, device_alis, tags, -->
+      <!--device_type, version, network_model, -->
+      <!--device_lng, lat, addr, -->
+      <!--length, width, height, -->
+      <!--capacity, last_capacity, device_state, -->
+      <!--created_by, created_time, last_update_by, -->
+      <!--last_update_time, device_desc)-->
+    <!--values (#{deviceId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{deviceCode,jdbcType=VARCHAR}, -->
+      <!--#{deviceName,jdbcType=VARCHAR}, #{deviceAlis,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, -->
+      <!--#{deviceType,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{networkModel,jdbcType=VARCHAR}, -->
+      <!--#{deviceLng,jdbcType=DECIMAL}, #{lat,jdbcType=DECIMAL}, #{addr,jdbcType=VARCHAR}, -->
+      <!--#{length,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, -->
+      <!--#{capacity,jdbcType=DECIMAL}, #{lastCapacity,jdbcType=DECIMAL}, #{deviceState,jdbcType=VARCHAR}, -->
+      <!--#{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, -->
+      <!--#{lastUpdateTime,jdbcType=TIMESTAMP}, #{deviceDesc,jdbcType=LONGVARBINARY})-->
+  <!--</insert>-->
+  <insert id="addDevice" parameterType="org.xfs.scm.data.business.device.device.vo.DeviceVo" >
+    INSERT INTO tb_device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="deviceCode != null" >
+        device_code,
+      </if>
+      <if test="deviceName != null" >
+        device_name,
+      </if>
+      <if test="deviceAlis != null" >
+        device_alis,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="networkModel != null" >
+        network_model,
+      </if>
+      <if test="deviceLng != null" >
+        device_lng,
+      </if>
+      <if test="lat != null" >
+        lat,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="capacity != null" >
+        capacity,
+      </if>
+      <if test="lastCapacity != null" >
+        last_capacity,
+      </if>
+      <if test="deviceState != null" >
+        device_state,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+      <if test="deviceDesc != null" >
+        device_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAlis != null" >
+        #{deviceAlis,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="networkModel != null" >
+        #{networkModel,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceLng != null" >
+        #{deviceLng,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null" >
+        #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null" >
+        #{capacity,jdbcType=DECIMAL},
+      </if>
+      <if test="lastCapacity != null" >
+        #{lastCapacity,jdbcType=DECIMAL},
+      </if>
+      <if test="deviceState != null" >
+        #{deviceState,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceDesc != null" >
+        #{deviceDesc,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyDevice" parameterType="org.xfs.scm.data.business.device.device.vo.DeviceVo" >
+    UPDATE tb_device
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceName != null" >
+        device_name = #{deviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceAlis != null" >
+        device_alis = #{deviceAlis,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="networkModel != null" >
+        network_model = #{networkModel,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceLng != null" >
+        device_lng = #{deviceLng,jdbcType=DECIMAL},
+      </if>
+      <if test="lat != null" >
+        lat = #{lat,jdbcType=DECIMAL},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="capacity != null" >
+        capacity = #{capacity,jdbcType=DECIMAL},
+      </if>
+      <if test="lastCapacity != null" >
+        last_capacity = #{lastCapacity,jdbcType=DECIMAL},
+      </if>
+      <if test="deviceState != null" >
+        device_state = #{deviceState,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceDesc != null" >
+        device_desc = #{deviceDesc,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    WHERE device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.system.role.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.system.role.entity.Role" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="BIGINT" />
+    <result column="rname" property="rname" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMapDept" type="org.xfs.scm.data.system.role.po.RolePo" extends="BaseResultMap">
+  	  <result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+  	  <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- TreeRoleMap -->
+  <resultMap id="TreeRoleMap" type="org.xfs.scm.data.system.role.po.TreeRole">
+  	  <result column="rid" property="id" jdbcType="INTEGER" />
+  	  <result column="rname" property="text" jdbcType="VARCHAR" />
+  	  <result column="seq" property="seq" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    tr.rid, tr.dept_id, tr.rname, tr.seq, tr.state, tr.memo, tr.created_by, tr.created_time, tr.last_update_by, 
+    tr.last_update_time
+  </sql>
+  
+  <sql id="WHERE_CONDITION">
+  	  <trim prefix="WHERE" prefixOverrides="AND | OR ">
+		    <if test="superFlag!=1">
+		     		 AND  tur.user_id=#{userId,jdbcType=BIGINT}
+		    </if>
+		     <if test="rname!=null">
+		    	AND  tr.rname like CONCAT('%',#{rname,jdbcType=VARCHAR},'%')
+		    </if>
+		    <if test="rid!=null">
+		    	AND  tr.rid=#{rid,jdbcType=BIGINT}
+		    </if>
+	    </trim>
+  	
+  </sql>
+  
+  <select id="getRole" resultMap="BaseResultMapDept" parameterType="org.xfs.scm.data.system.role.vo.RoleVo" >
+   SELECT DISTINCT
+	    <include refid="Base_Column_List" />,
+	    d.dept_code,d.dept_name
+   FROM tb_role tr LEFT JOIN tb_dept d ON tr.dept_id=d.dept_id
+	  LEFT JOIN tb_user_role tur ON tr.rid=tur.rid
+	  <include refid="WHERE_CONDITION" />
+ </select>
+ <select id="getRoleTree" resultMap="TreeRoleMap"  parameterType="org.xfs.scm.data.system.role.vo.RoleVo">
+  	  SELECT DISTINCT tr.rid,tr.rname,tr.seq
+	    FROM tb_role tr LEFT JOIN tb_user_role tur ON tr.rid=tur.rid 
+	                  LEFT JOIN tb_dept d ON tr.dept_id=d.dept_id
+	    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+		   <if test="superFlag!=1">
+		     	<if test="userId!=null">
+		     		 AND  tur.user_id=#{userId,jdbcType=BIGINT}
+		     	</if>
+		    </if>
+	    </trim>
+  </select>
+  
+  
+  <select id="countRole" resultType="java.lang.Long" parameterType="org.xfs.scm.data.system.role.vo.RoleVo">
+  		SELECT 
+  			count(DISTINCT tr.rid) cc
+	    FROM tb_role tr LEFT JOIN tb_user_role tur ON tr.rid=tur.rid
+	  LEFT JOIN tb_dept d ON tr.dept_id=d.dept_id
+	    <include refid="WHERE_CONDITION" />
+
+  </select>
+</mapper>

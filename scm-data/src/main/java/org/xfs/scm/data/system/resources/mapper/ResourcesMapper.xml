@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.system.resources.mapper.ResourcesMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.system.resources.entity.Resources" >
+    <id column="rsid" property="rsid" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="rs_type" property="rsType" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="iconcls" property="iconcls" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+    <!-- 用户资源 -->
+   <resultMap id="ResourceMap" type="org.xfs.scm.data.system.resources.po.ResourcePo" >
+    <id column="rsid" property="id" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="iconcls" property="iconCls" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+ 	<result column="rs_type" property="rsType" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    tr.rsid,  tr.pid,  tr.rs_type,  tr.name,  tr.url,  tr.iconcls,  tr.seq,  tr.target,  tr.memo
+  </sql>
+  <sql id="Base_Column_list_time">
+  	tr.created_by, tr.created_time,tr.last_update_by, tr.last_update_time
+  </sql>
+  <select id="getResources" resultMap="ResourceMap" parameterType="org.xfs.scm.data.system.resources.vo.ResourcesVo" >
+    SELECT DISTINCT
+    	<include refid="Base_Column_List" />,trs.name AS pname
+    FROM tb_resources tr
+    	LEFT JOIN tb_resources trs ON tr.pid=trs.rsid
+    LEFT JOIN tb_role_resources trr ON trr.rsid=tr.rsid
+    LEFT JOIN tb_user_role tur ON trr.rid=tur.rid
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="superFlag==0 and  rsid == null">
+	        AND tur.user_id = #{userId,jdbcType=BIGINT}
+	      <if test="rid!= null" >
+	        AND trr.rid = #{rid,jdbcType=BIGINT}
+	      </if>
+      </if>
+      <if test="rsid != null" >
+       AND tr.rsid = #{rsid,jdbcType=VARCHAR}
+      </if>
+      <if test="pid != null" >
+       AND tr.pid = #{pid,jdbcType=VARCHAR}
+      </if>
+      <if test="rsType != null" >
+       AND tr.rs_type = #{rsType,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+       AND tr.name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null" >
+       AND tr.url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="iconcls != null" >
+       AND tr.iconcls = #{iconcls,jdbcType=VARCHAR}
+      </if>
+      <if test="seq != null" >
+       AND tr.seq = #{seq,jdbcType=INTEGER}
+      </if>
+      <if test="target != null" >
+       AND tr.target = #{target,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null" >
+       AND tr.memo = #{memo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  
+  <delete id="removeResources" parameterType="java.lang.Long" >
+    DELETE FROM tb_resources
+    WHERE rsid = #{rsid,jdbcType=BIGINT}
+  </delete>
+  
+</mapper>

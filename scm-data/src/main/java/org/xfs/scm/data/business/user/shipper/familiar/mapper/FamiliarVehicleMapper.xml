@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.shipper.familiar.mapper.FamiliarVehicleMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.shipper.familiar.po.FamiliarVehicle" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />
+    <result column="driver_user_id" property="driverUserId" jdbcType="BIGINT" />
+    <result column="remark_name" property="remarkName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="vehicle_id" property="vehicleId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <resultMap id="FamiliarVehicleMap" type="org.xfs.scm.data.business.user.shipper.familiar.vo.FamiliarVehicleVo" extends="BaseResultMap">
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_nick_name" property="userNickName" jdbcType="VARCHAR" />
+    <result column="user_idcard_name" property="userIdcardName" jdbcType="VARCHAR" />
+    <result column="user_header_url" property="userHeadUrl" jdbcType="VARCHAR" />
+    <result column="dict_name" property="vehicleTypeName" jdbcType="VARCHAR" />
+    <result column="vehicle_num" property="vehicleNum" jdbcType="VARCHAR" />
+    <result column="vehicle_type" property="vehicleId" jdbcType="INTEGER" />
+    <result column="vehicle_capacity" property="vehicleId" jdbcType="INTEGER" />
+    <result column="vehicle_length" property="vehicleId" jdbcType="INTEGER" />
+    <result column="vehicle_volume" property="vehicleId" jdbcType="INTEGER" />
+
+  </resultMap>
+
+  <!--熟车信息-->
+  <sql id="Base_Column_List" >
+    tbfv.id, tbfv.owner_user_id, tbfv.driver_user_id, tbfv.remark_name, tbfv.remark, tbfv.vehicle_id, tbfv.create_time
+  </sql>
+  <select id="getFamiliarVehicles" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.shipper.familiar.vo.FamiliarVehicleVo" >
+    SELECT
+      <include refid="Base_Column_List" />,
+        tub.user_phone,
+        tui.user_nick_name,tui.user_header_url,tui.user_idcard_name,
+        tuv.vehicle_num,tuv.vehicle_type,.tuv.vehicle_capacity,tuv.vehicle_length,tuv.vehicle_volume,
+        td.dict_name
+      FROM tb_busi_familiar_vehicle tbfv
+              LEFT JOIN tb_user_basic tub ON tbfv.driver_user_id=tub.id AND tub.user_role=2
+              LEFT JOIN tb_user_info tui ON tbfv.driver_user_id=tui.user_id
+              LEFT JOIN tb_user_vehicle tuv ON tbfv.vehicle_id=tuv.id
+              LEFT JOIN tb_dict td ON tuv.vehicle_type=td.dict_code
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="id!=null">
+            AND tbfv.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="ownerUserId!=null">
+            AND tbfv.owner_user_id= #{ownerUserId,jdbcType=BIGINT}
+        </if>
+      <if test="shipperIds!=null">
+            AND  tbfv.driver_user_id IN
+            <foreach item="driverUserId" index="index" collection="shipperIds" open="(" separator="," close=")">
+                #{driverUserId,jdbcType=BIGINT}
+            </foreach>
+      </if>
+    </trim>
+  </select>
+  <delete id="removeFamiliarVehicle" parameterType="org.xfs.scm.data.business.user.shipper.familiar.vo.FamiliarVehicleVo" >
+    DELETE FROM tb_busi_familiar_vehicle
+    WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+ <!-- <insert id="insert" parameterType="org.xfs.scm.data.business.user.shipper.familiar.entity.FamiliarVehicle" >
+    insert into tb_busi_familiar_vehicle (id, owner_user_id, driver_user_id, 
+      remark_name, remark, vehicle_id, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{ownerUserId,jdbcType=BIGINT}, #{driverUserId,jdbcType=BIGINT}, 
+      #{remarkName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{vehicleId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>-->
+  <insert id="addFamiliarVehicle" parameterType="org.xfs.scm.data.business.user.shipper.familiar.vo.FamiliarVehicleVo"  useGeneratedKeys="true" keyProperty="id">
+    insert into tb_busi_familiar_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ownerUserId != null" >
+        owner_user_id,
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id,
+      </if>
+      <if test="remarkName != null" >
+        remark_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="vehicleId != null" >
+        vehicle_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ownerUserId != null" >
+        #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="driverUserId != null" >
+        #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="remarkName != null" >
+        #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleId != null" >
+        #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyFamiliarVehicle" parameterType="org.xfs.scm.data.business.user.shipper.familiar.vo.FamiliarVehicleVo" >
+    update tb_busi_familiar_vehicle
+    <set >
+      <if test="ownerUserId != null" >
+        owner_user_id = #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="driverUserId != null" >
+        driver_user_id = #{driverUserId,jdbcType=BIGINT},
+      </if>
+      <if test="remarkName != null" >
+        remark_name = #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleId != null" >
+        vehicle_id = #{vehicleId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

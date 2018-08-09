@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.driver.driver.mapper.DriverMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.driver.driver.bo.DriverBo" >
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, driver_user_id, driver_license_num, driver_license_url, driver_license_audit, 
+    audit_remark, audit_mid, vechile_lisense_url, vehicle_type, vehicle_own_name, vehicle_num, 
+    vehicle_length, vehicle_capacity, vehicle_volume, vehicle_carriage_length, vehicle_carriage_width, 
+    vehicle_carriage_high, last_longitude, last_latitude, last_address, last_update_time, 
+    vehicle_status, create_time, update_time
+  </sql>
+  <select id="getUserVehicles" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.driver.vehicle.vo.UserVehicleVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_vehicle
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+</mapper>

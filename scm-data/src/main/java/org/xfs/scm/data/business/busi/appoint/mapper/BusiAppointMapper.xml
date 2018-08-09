@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.busi.appoint.mapper.BusiOrderAppointMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.busi.appoint.vo.BusiOrderAppointVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="appoint_user_id" property="appointUserId" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />
+    <result column="appoint_status" property="appointStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+      id, appoint_user_id, order_id, owner_user_id, appoint_status, create_time, updateTime
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppointKey" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tb_busi_appoint-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+      <!--and appoint_user_id = #{appointUserId,jdbcType=BIGINT}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppointKey" >-->
+    <!--delete from tb_busi_appoint-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+      <!--and appoint_user_id = #{appointUserId,jdbcType=BIGINT}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppoint" >-->
+    <!--insert into tb_busi_appoint (id, appoint_user_id, order_id, -->
+      <!--owner_user_id, appoint_status, create_time, -->
+      <!--updateTime)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{appointUserId,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, -->
+      <!--#{ownerUserId,jdbcType=BIGINT}, #{appointStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, -->
+      <!--#{updatetime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppoint" >-->
+    <!--insert into tb_busi_appoint-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="appointUserId != null" >-->
+        <!--appoint_user_id,-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id,-->
+      <!--</if>-->
+      <!--<if test="ownerUserId != null" >-->
+        <!--owner_user_id,-->
+      <!--</if>-->
+      <!--<if test="appointStatus != null" >-->
+        <!--appoint_status,-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time,-->
+      <!--</if>-->
+      <!--<if test="updatetime != null" >-->
+        <!--updateTime,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="appointUserId != null" >-->
+        <!--#{appointUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--#{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ownerUserId != null" >-->
+        <!--#{ownerUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="appointStatus != null" >-->
+        <!--#{appointStatus,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--#{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="updatetime != null" >-->
+        <!--#{updatetime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppoint" >-->
+    <!--update tb_busi_appoint-->
+    <!--<set >-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id = #{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ownerUserId != null" >-->
+        <!--owner_user_id = #{ownerUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="appointStatus != null" >-->
+        <!--appoint_status = #{appointStatus,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="updatetime != null" >-->
+        <!--updateTime = #{updatetime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+      <!--and appoint_user_id = #{appointUserId,jdbcType=BIGINT}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="org.xfs.scm.data.business.busi.appoint.entity.BusiAppoint" >-->
+    <!--update tb_busi_appoint-->
+    <!--set order_id = #{orderId,jdbcType=VARCHAR},-->
+      <!--owner_user_id = #{ownerUserId,jdbcType=BIGINT},-->
+      <!--appoint_status = #{appointStatus,jdbcType=INTEGER},-->
+      <!--create_time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--updateTime = #{updatetime,jdbcType=TIMESTAMP}-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+      <!--and appoint_user_id = #{appointUserId,jdbcType=BIGINT}-->
+  <!--</update>-->
+</mapper>

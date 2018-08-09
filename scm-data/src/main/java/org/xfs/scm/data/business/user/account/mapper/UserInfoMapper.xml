@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.account.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.account.po.UserInfo" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_nick_name" property="userNickName" jdbcType="VARCHAR" />
+    <result column="user_sex" property="userSex" jdbcType="INTEGER" />
+    <result column="user_header_url" property="userHeaderUrl" jdbcType="VARCHAR" />
+    <result column="user_birth" property="userBirth" jdbcType="VARCHAR" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_addr" property="userAddr" jdbcType="VARCHAR" />
+    <result column="user_addr_detail" property="userAddrDetail" jdbcType="VARCHAR" />
+    <result column="user_idcard_name" property="userIdcardName" jdbcType="VARCHAR" />
+    <result column="user_idcard_num" property="userIdcardNum" jdbcType="VARCHAR" />
+    <result column="user_idcard_back_url" property="userIdcardBackUrl" jdbcType="VARCHAR" />
+    <result column="user_idcard_front_url" property="userIdcardFrontUrl" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+    <result column="audit_mid" property="auditMid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tui.user_id, tui.user_nick_name, tui.user_sex, tui.user_header_url, tui.user_birth, tui.user_email, tui.user_addr,
+    tui.user_addr_detail,  tui.user_idcard_name, user_idcard_num, user_idcard_back_url, user_idcard_front_url,
+    user_status, audit_remark, audit_mid, create_time, update_time
+  </sql>
+  <select id="getUserInfo" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.account.vo.UserInfoVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_info tui
+    where tui.user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="removeUserInfo" parameterType="org.xfs.scm.data.business.user.account.vo.UserInfoVo" >
+    delete from tb_user_info
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.user.account.vo.UserInfoVo" >-->
+    <!--insert into tb_user_info (user_id, user_nick_name, user_sex, -->
+      <!--user_header_url, user_birth, user_email, -->
+      <!--user_addr, user_addr_detail, user_idcard_name, -->
+      <!--user_idcard_num, user_idcard_back_url, user_idcard_front_url, -->
+      <!--user_status, audit_remark, audit_mid, -->
+      <!--create_time, update_time)-->
+    <!--values (#{userId,jdbcType=BIGINT}, #{userNickName,jdbcType=VARCHAR}, #{userSex,jdbcType=INTEGER}, -->
+      <!--#{userHeaderUrl,jdbcType=VARCHAR}, #{userBirth,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, -->
+      <!--#{userAddr,jdbcType=VARCHAR}, #{userAddrDetail,jdbcType=VARCHAR}, #{userIdcardName,jdbcType=VARCHAR}, -->
+      <!--#{userIdcardNum,jdbcType=VARCHAR}, #{userIdcardBackUrl,jdbcType=VARCHAR}, #{userIdcardFrontUrl,jdbcType=VARCHAR}, -->
+      <!--#{userStatus,jdbcType=INTEGER}, #{auditRemark,jdbcType=VARCHAR}, #{auditMid,jdbcType=BIGINT}, -->
+      <!--#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addUserInfo" parameterType="org.xfs.scm.data.business.user.account.vo.UserInfoVo" >
+    insert into tb_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userNickName != null" >
+        user_nick_name,
+      </if>
+      <if test="userSex != null" >
+        user_sex,
+      </if>
+      <if test="userHeaderUrl != null" >
+        user_header_url,
+      </if>
+      <if test="userBirth != null" >
+        user_birth,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userAddr != null" >
+        user_addr,
+      </if>
+      <if test="userAddrDetail != null" >
+        user_addr_detail,
+      </if>
+      <if test="userIdcardName != null" >
+        user_idcard_name,
+      </if>
+      <if test="userIdcardNum != null" >
+        user_idcard_num,
+      </if>
+      <if test="userIdcardBackUrl != null" >
+        user_idcard_back_url,
+      </if>
+      <if test="userIdcardFrontUrl != null" >
+        user_idcard_front_url,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark,
+      </if>
+      <if test="auditMid != null" >
+        audit_mid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userNickName != null" >
+        #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userHeaderUrl != null" >
+        #{userHeaderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirth != null" >
+        #{userBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddr != null" >
+        #{userAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddrDetail != null" >
+        #{userAddrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardName != null" >
+        #{userIdcardName,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardNum != null" >
+        #{userIdcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardBackUrl != null" >
+        #{userIdcardBackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardFrontUrl != null" >
+        #{userIdcardFrontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditRemark != null" >
+        #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMid != null" >
+        #{auditMid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyUserInfo" parameterType="org.xfs.scm.data.business.user.account.vo.UserInfoVo" >
+    update tb_user_info
+    <set >
+      <if test="userNickName != null" >
+        user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        user_sex = #{userSex,jdbcType=INTEGER},
+      </if>
+      <if test="userHeaderUrl != null" >
+        user_header_url = #{userHeaderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userBirth != null" >
+        user_birth = #{userBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddr != null" >
+        user_addr = #{userAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddrDetail != null" >
+        user_addr_detail = #{userAddrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardName != null" >
+        user_idcard_name = #{userIdcardName,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardNum != null" >
+        user_idcard_num = #{userIdcardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardBackUrl != null" >
+        user_idcard_back_url = #{userIdcardBackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcardFrontUrl != null" >
+        user_idcard_front_url = #{userIdcardFrontUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditRemark != null" >
+        audit_remark = #{auditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="auditMid != null" >
+        audit_mid = #{auditMid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

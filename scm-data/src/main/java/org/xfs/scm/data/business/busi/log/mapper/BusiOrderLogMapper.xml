@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.busi.log.mapper.BusiOrderLogMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_status_from" property="orderStatusFrom" jdbcType="INTEGER" />
+    <result column="order_status_to" property="orderStatusTo" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="op_type" property="opType" jdbcType="INTEGER" />
+    <result column="op_user_id" property="opUserId" jdbcType="BIGINT" />
+    <result column="op_mid" property="opMid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, order_status_from, order_status_to, remark, op_type, op_user_id, op_mid, 
+    create_time
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from tb_busi_order_log-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >-->
+    <!--delete from tb_busi_order_log-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo" >-->
+    <!--insert into tb_busi_order_log (id, order_id, order_status_from, -->
+      <!--order_status_to, remark, op_type, -->
+      <!--op_user_id, op_mid, create_time-->
+      <!--)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{orderStatusFrom,jdbcType=INTEGER}, -->
+      <!--#{orderStatusTo,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{opType,jdbcType=INTEGER}, -->
+      <!--#{opUserId,jdbcType=BIGINT}, #{opMid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}-->
+      <!--)-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo" >-->
+    <!--insert into tb_busi_order_log-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id,-->
+      <!--</if>-->
+      <!--<if test="orderStatusFrom != null" >-->
+        <!--order_status_from,-->
+      <!--</if>-->
+      <!--<if test="orderStatusTo != null" >-->
+        <!--order_status_to,-->
+      <!--</if>-->
+      <!--<if test="remark != null" >-->
+        <!--remark,-->
+      <!--</if>-->
+      <!--<if test="opType != null" >-->
+        <!--op_type,-->
+      <!--</if>-->
+      <!--<if test="opUserId != null" >-->
+        <!--op_user_id,-->
+      <!--</if>-->
+      <!--<if test="opMid != null" >-->
+        <!--op_mid,-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="orderId != null" >-->
+        <!--#{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="orderStatusFrom != null" >-->
+        <!--#{orderStatusFrom,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="orderStatusTo != null" >-->
+        <!--#{orderStatusTo,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="remark != null" >-->
+        <!--#{remark,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="opType != null" >-->
+        <!--#{opType,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="opUserId != null" >-->
+        <!--#{opUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="opMid != null" >-->
+        <!--#{opMid,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--#{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="org.xfs.scm.data.business.busi.log.vo.BusiOrderLogVo" >-->
+    <!--update tb_busi_order_log-->
+    <!--<set >-->
+      <!--<if test="orderId != null" >-->
+        <!--order_id = #{orderId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="orderStatusFrom != null" >-->
+        <!--order_status_from = #{orderStatusFrom,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="orderStatusTo != null" >-->
+        <!--order_status_to = #{orderStatusTo,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="remark != null" >-->
+        <!--remark = #{remark,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="opType != null" >-->
+        <!--op_type = #{opType,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="opUserId != null" >-->
+        <!--op_user_id = #{opUserId,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="opMid != null" >-->
+        <!--op_mid = #{opMid,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--create_time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=BIGINT}-->
+  <!--</update>-->
+
+</mapper>

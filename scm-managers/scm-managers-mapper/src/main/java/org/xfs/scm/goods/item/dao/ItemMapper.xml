@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.goods.item.dao.ItemMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.item.entity.Item" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sell_point" property="sellPoint" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    
+ 	<result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ti.id, ti.title,ti.sell_point, ti.price, ti.num, ti.barcode, ti.image, ti.cid, ti.state,ti.created_by, ti.created_time, ti.last_update_by, 
+    ti.last_update_time
+  </sql>
+  <select id="getItem" resultMap="BaseResultMap" parameterType="org.xfs.scm.item.vo.ItemVo" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM tb_item ti
+	 <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="id != null" >
+        AND ti.id= #{id,jdbcType=BIGINT}
+      </if>
+      <if test="title != null" >
+        AND ti.title= #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPoint != null" >
+        AND ti.sellPoint= #{sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        AND ti.price= #{price,jdbcType=BIGINT},
+      </if>
+      <if test="num != null" >
+        AND ti.num= #{num,jdbcType=INTEGER},
+      </if>
+      <if test="barcode != null" >
+        AND ti.barcode= #{barcode,jdbcType=VARCHAR},
+      </if>
+    
+      <if test="cid != null" >
+         AND ti.cid= #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+         AND ti.state= #{state,jdbcType=TINYINT},
+      </if>
+     
+   </trim>
+  </select>
+  <delete id="removeItem" parameterType="org.xfs.scm.item.vo.ItemVo" >
+    DELETE FROM tb_item
+    WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="addItem" parameterType="org.xfs.scm.item.vo.ItemVo" >
+    INSERT INTO tb_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="sellPoint != null" >
+        sell_point,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="barcode != null" >
+        barcode,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+   	  <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPoint != null" >
+        #{sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=BIGINT},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="barcode != null" >
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+       <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyItem" parameterType="org.xfs.scm.item.vo.ItemVo" >
+    update tb_item
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPoint != null" >
+        sell_point = #{sellPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=BIGINT},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="barcode != null" >
+        barcode = #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+ 
+</mapper>

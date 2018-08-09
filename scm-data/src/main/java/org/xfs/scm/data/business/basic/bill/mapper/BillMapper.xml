@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.basic.bill.mapper.BillMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.basic.bill.entity.Bill" >
+    <id column="bill_id" property="billId" jdbcType="BIGINT" />
+    <result column="bill_code" property="billCode" jdbcType="VARCHAR" />
+    <result column="bill_name" property="billName" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bill_id, bill_code, bill_name, rate, created_by, created_time, last_update_by, last_update_time
+  </sql>
+  <select id="getBills" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.basic.bill.vo.BillVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_bill
+   <trim prefix="WHERE" prefixOverrides="AND |OR " >
+      <if test="billId!=null and billId!=''">
+          AND  bill_id = #{billId,jdbcType=BIGINT}
+      </if>
+      <if test="q!=null and q!=''">
+          AND bill_name  LIKE  CONCAT('%', #{q,jdbcType=VARCHAR},'%')
+      </if>
+       <if test="billName!=null and billName!=''">
+           AND bill_name  LIKE  CONCAT('%', #{billName,jdbcType=VARCHAR},'%')
+       </if>
+      <if test="rate!=null">
+          AND  rate = #{rate,jdbcType=DECIMAL}
+      </if>
+
+
+  </trim>
+
+  </select>
+  <delete id="removeBill" parameterType="org.xfs.scm.data.business.basic.bill.vo.BillVo" >
+    DELETE FROM tb_bill
+    WHERE bill_id = #{billId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.basic.bill.vo.BillVo" >-->
+    <!--insert into tb_bill (bill_id, bill_code, bill_name, -->
+      <!--rate, created_by, created_time, -->
+      <!--last_update_by, last_update_time)-->
+    <!--values (#{billId,jdbcType=BIGINT}, #{billCode,jdbcType=VARCHAR}, #{billName,jdbcType=VARCHAR}, -->
+      <!--#{rate,jdbcType=DECIMAL}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, -->
+      <!--#{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addBill" parameterType="org.xfs.scm.data.business.basic.bill.vo.BillVo" >
+    insert into tb_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        bill_id,
+      </if>
+      <if test="billCode != null" >
+        bill_code,
+      </if>
+      <if test="billName != null" >
+        bill_name,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        #{billId,jdbcType=BIGINT},
+      </if>
+      <if test="billCode != null" >
+        #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="billName != null" >
+        #{billName,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyBill" parameterType="org.xfs.scm.data.business.basic.bill.vo.BillVo" >
+    update tb_bill
+    <set >
+      <if test="billCode != null" >
+        bill_code = #{billCode,jdbcType=VARCHAR},
+      </if>
+      <if test="billName != null" >
+        bill_name = #{billName,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bill_id = #{billId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

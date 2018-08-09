@@ -1,0 +1,26 @@
+[{
+  'id':0,
+  'title':'中国',
+  'data':{
+    'id':50,
+    'name':'大米'
+  },'nodes': [{
+    'id': 1,
+    'title': '集团A',
+    'nodes': []
+  }, {
+    'id': 2,
+    'title': '集团B',
+    'nodes': []
+  }, {
+    'id': 3,
+    'title': '集团C',
+    'nodes': []
+  }, {
+    'id': 4,
+    'title': '集团D',
+    'nodes': []
+  }]
+},{ 'id': 3,
+  'title': '企货通',
+  'nodes': []}]

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.system.dept.dao.DeptMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.system.dept.entity.Dept" >
+    <id column="dept_id" property="deptId" jdbcType="BIGINT" />
+    <result column="p_dept_id" property="pDeptId" jdbcType="BIGINT" />
+    <result column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="changer" property="changer" jdbcType="VARCHAR" />
+    <result column="ctype" property="ctype" jdbcType="TINYINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  <resultMap id="BaseResultMap2" type="org.xfs.scm.system.dept.po.DeptPo" extends ="BaseResultMap" >
+  	<result column="pdeptId" property="pdeptId" jdbcType="BIGINT" />
+    <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="pdeptId" property="pdeptId" jdbcType="VARCHAR" />
+    <result column="ocode" property="ocode" jdbcType="VARCHAR" />
+    <result column="oname" property="oname" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    d.dept_id, d.p_dept_id, d.oid, d.dept_code, d.dept_name, d.changer, d.ctype, d.state, d.created_by, 
+    d.created_time, d.last_update_by, d.last_update_time
+  </sql>
+  
+  <sql id="WHERE_CONDITION">
+ 	<trim prefix="WHERE" prefixOverrides="AND|OR">
+	 <if test="deptId != null" >
+	      AND d.dept_id = #{deptId,jdbcType=BIGINT}
+	 </if>
+     <if test="q!= null" >
+        AND d.dept_code like CONCAT('%',#{q,jdbcType=VARCHAR},'%') AND d.dept_name like CONCAT('%',#{q,jdbcType=VARCHAR},'%')
+      </if>
+   	  <if test="pDeptId != null" >
+        AND d.p_dept_id = #{pDeptId,jdbcType=BIGINT}
+      </if>
+      <if test="oid != null" >
+        AND d.oid = #{oid,jdbcType=BIGINT}
+      </if>
+      <if test="deptCode != null" >
+        AND d.dept_code like CONCAT('%',#{deptCode,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="deptName != null" >
+        AND d.dept_name like CONCAT('%',#{deptName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="changer != null" >
+        AND d.changer = #{changer,jdbcType=VARCHAR}
+      </if>
+      <if test="ctype != null" >
+        AND d.ctype = #{ctype,jdbcType=INTEGER}
+      </if>
+      <if test="state != null" >
+        AND d.state = #{state,jdbcType=INTEGER}
+      </if>
+      <if test="createdBy != null" >
+        AND d.created_by = #{createdBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createdTime != null" >
+        AND d.created_time = #{createdTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastUpdateBy != null" >
+        AND d.last_update_by = #{lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="lastUpdateTime != null" >
+        AND d.last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+      </if>
+   	 </trim>
+  </sql>
+  
+  <select id="getDept" resultMap="BaseResultMap2" parameterType="org.xfs.scm.system.dept.vo.DeptVo" >
+    SELECT 
+    	<include refid="Base_Column_List" />,
+    	dt.dept_code as pcode,dt.dept_name as pname,o.ocode as ocode,o.oname,dt.dept_id as pdeptId 
+  	FROM tb_dept d
+	LEFT JOIN tb_dept dt ON d.p_dept_id=dt.dept_id
+	LEFT JOIN tb_organization o ON d.oid=o.oid
+	   <include refid="WHERE_CONDITION" />
+  </select>
+  
+  <select id="countAll" resultType="java.lang.Long" parameterType="org.xfs.scm.system.dept.vo.DeptVo" >
+    SELECT 
+    	COUNT(*) AS cc
+  	FROM tb_dept d
+	LEFT JOIN tb_dept dt ON d.p_dept_id=dt.dept_id
+	LEFT JOIN tb_organization o ON d.oid=o.oid
+ 		   <include refid="WHERE_CONDITION" />
+  </select>
+ 
+  	
+ <delete id="removeDept" parameterType="org.xfs.scm.system.dept.vo.DeptVo" >
+    DELETE FROM tb_dept  WHERE dept_id = #{deptId,jdbcType=BIGINT}  
+  </delete>
+ 
+</mapper>

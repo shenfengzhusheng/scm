@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.system.organization.mapper.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.system.organization.entity.Organization" >
+    <id column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="poid" property="poid" jdbcType="BIGINT" />
+	<result column="cust_id" property="custId" jdbcType="BIGINT" />
+	<result column="ocode" property="ocode" jdbcType="VARCHAR" />
+    <result column="oname" property="oname" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="independence" property="independence" jdbcType="TINYINT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="org.xfs.scm.data.system.organization.po.OrganizationPo" >
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    o.oid, o.poid,o.cust_id ,o.ocode, o.oname, o.address,o.independence, o.state, o.memo, o.created_by, o.created_time, o.last_update_by,
+    o.last_update_time
+  </sql>
+  
+  
+  
+  <select id="getOrganization" resultMap="BaseResultMap2" parameterType="org.xfs.scm.data.system.organization.vo.OrganizationVo" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    <!-- from torganization o inner join torganization op on o.POID=op.OID -->
+    ,IFNULL(t.oname,'') as pname 
+   	 FROM tb_organization o
+	 LEFT JOIN tb_organization t ON o.poid=t.oid
+     <trim prefix="WHERE" prefixOverrides="AND | OR ">
+		<if test="superFlag!=1">
+			AND o.cust_id=#{custId,jdbcType=BIGINT}
+		</if>
+		<if test="q!=null">
+		   	AND (o.ocode like CONCAT('%',#{q,jdbcType=VARCHAR},'%') OR  o.oname LIKE CONCAT('%',#{q,jdbcType=VARCHAR},'%'))
+		 </if>
+		 <if test="oid != null" >
+     	    AND o.oid=#{oid,jdbcType=BIGINT}
+    	 </if>
+		 <if test="poid != null" >
+		    AND o.poid =#{poid,jdbcType=BIGINT}
+		 </if>
+		 <if test="ocode != null" >
+		    AND o.ocode like CONCAT('%',#{ocode,jdbcType=VARCHAR},'%')
+		 </if>
+		 <if test="oname != null" >
+		    AND o.oname like CONCAT('%',#{oname,jdbcType=VARCHAR},'%')
+		 </if>
+		 <if test="independence != null" >
+		    AND o.independence=#{independence,jdbcType=INTEGER}
+		 </if>
+		 <if test="state != null" >
+		    AND o.state=#{state,jdbcType=TINYINT}
+		 </if>
+	    </trim>
+  </select>
+  
+  
+   <select id="countAll" resultType="java.lang.Long" parameterType="org.xfs.scm.data.system.organization.vo.OrganizationVo" >
+    SELECT  count(*) as cc
+   	 FROM tb_organization o
+	 LEFT JOIN tb_organization t ON o.poid=t.oid
+     <trim prefix="WHERE" prefixOverrides="AND | OR ">
+		 <if test="superFlag!=1">
+			 AND o.cust_id=#{custId,jdbcType=BIGINT}
+		 </if>
+		<if test="q!=null">
+		   	AND (o.ocode like CONCAT('%',#{q,jdbcType=VARCHAR},'%') OR  o.oname LIKE CONCAT('%',#{q,jdbcType=VARCHAR},'%'))
+		 </if>
+		 <if test="oid != null" >
+     	    AND o.oid=#{oid,jdbcType=BIGINT}
+    	 </if>
+		 <if test="poid != null" >
+		    AND o.poid =#{poid,jdbcType=BIGINT}
+		 </if>
+		 <if test="ocode != null" >
+		    AND o.ocode like CONCAT('%',#{ocode,jdbcType=VARCHAR},'%')
+		 </if>
+		 <if test="oname != null" >
+		    AND o.oname like CONCAT('%',#{oname,jdbcType=VARCHAR},'%')
+		 </if>
+		 <if test="independence != null" >
+		    AND o.independence=#{independence,jdbcType=INTEGER}
+		 </if>
+		 <if test="state != null" >
+		    AND o.state=#{state,jdbcType=TINYINT}
+		 </if>
+	    </trim>
+  </select>
+  
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.account.mapper.UserBasicMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.account.po.UserBasic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_login_name" property="userLoginName" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="user_pwd_salt" property="userPwdSalt" jdbcType="VARCHAR" />
+    <result column="user_role" property="userRole" jdbcType="INTEGER" />
+    <result column="user_invite_code" property="userInviteCode" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <resultMap id="AccountResultMap" type="org.xfs.scm.data.business.user.account.vo.AccountVo" >
+      <result column="user_nick_name" property="userNickName" jdbcType="VARCHAR" />
+      <result column="user_sex" property="userSex" jdbcType="INTEGER" />
+      <result column="user_header_url" property="userHeaderUrl" jdbcType="VARCHAR" />
+      <result column="user_birth" property="userBirth" jdbcType="VARCHAR" />
+      <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+      <result column="user_addr" property="userAddr" jdbcType="VARCHAR" />
+      <result column="user_addr_detail" property="userAddrDetail" jdbcType="VARCHAR" />
+      <result column="user_idcard_name" property="userIdcardName" jdbcType="VARCHAR" />
+      <result column="user_idcard_num" property="userIdcardNum" jdbcType="VARCHAR" />
+      <result column="audit_status" property="auditStatus" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    tub.id, tub.user_login_name, tub.user_phone, tub.user_pwd, tub.user_pwd_salt, tub.user_role, tub.user_invite_code,
+    tub.user_status, tub.create_time, tub.update_time
+  </sql>
+
+  <sql id="query_user_info">
+    tui.user_nick_name,tui.user_sex,tui.user_header_url,tui.user_birth,tui.user_email,tui.user_addr,tui.user_idcard_name,tui.user_idcard_num,tui.user_status AS audit_status
+  </sql>
+
+  <select id="getUserBasics" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.account.vo.UserBasicVo" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM tb_user_basic tub
+    WHERE tub.id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <select id="getAccounts" resultMap="AccountResultMap" parameterType="org.xfs.scm.data.business.user.account.vo.AccountVo" >
+    SELECT
+        <include refid="Base_Column_List" />,
+        <include refid="query_user_info"/>
+    FROM tb_user_basic tub LEFT JOIN tb_user_info tui ON tub.id=tui.user_id
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="isDel==0">
+          AND tub.user_status!=-1
+        </if>
+        <if test="userPhone!=null">
+           AND  tub.user_phone LIKE  CONCAT('%',#{userPhone,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userRole!=null">
+           AND  tuo.user_role= #{userRole,jdbcType=INTEGER}
+        </if>
+        <if test="auditStatus!=null">
+            AND  tui.user_status= #{auditStatus,jdbcType=INTEGER}
+        </if>
+        <if test="userIdcardName!=null">
+            AND tui.user_idcard_name  LIKE  CONCAT('%',#{userIdcardName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="userNickName!=null">
+            AND tui.user_nick_name  LIKE  CONCAT('%',#{userNickName,jdbcType=VARCHAR},'%')
+        </if>
+    </trim>
+  </select>
+
+
+  <delete id="remvoeUserBasic" parameterType="org.xfs.scm.data.business.user.account.vo.UserBasicVo" >
+    DELETE FROM tb_user_basic
+    WHERE id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.user.account.po.UserBasic" >
+    insert into tb_user_basic (id, user_login_name, user_phone, 
+      user_pwd, user_pwd_salt, user_role, 
+      user_invite_code, user_status, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{userLoginName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userPwd,jdbcType=VARCHAR}, #{userPwdSalt,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, 
+      #{userInviteCode,jdbcType=VARCHAR}, #{userStatus,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>-->
+  <insert id="addUserBasic" parameterType="org.xfs.scm.data.business.user.account.vo.UserBasicVo" useGeneratedKeys="true" keyProperty="id">
+    insert into tb_user_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userLoginName != null" >
+        user_login_name,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="userPwdSalt != null" >
+        user_pwd_salt,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userInviteCode != null" >
+        user_invite_code,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userLoginName != null" >
+        #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwdSalt != null" >
+        #{userPwdSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userInviteCode != null" >
+        #{userInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyUserBasic" parameterType="org.xfs.scm.data.business.user.account.vo.UserBasicVo" >
+    update tb_user_basic
+    <set >
+      <if test="userLoginName != null" >
+        user_login_name = #{userLoginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwdSalt != null" >
+        user_pwd_salt = #{userPwdSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userInviteCode != null" >
+        user_invite_code = #{userInviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

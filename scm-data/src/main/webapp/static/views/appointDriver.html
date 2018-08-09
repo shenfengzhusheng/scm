@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="<@spring.url '/static/assets/css/public.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/static/assets/css/per_public.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/static/assets/css/qht.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/static/assets/layUI/laydate/skins/yalan/laydate.css'/>"/>
+    <link rel="stylesheet" href="<@spring.url '/static/assets/layUI/laypage/skin/laypage.css'/>">
+    <link rel="stylesheet" href="<@spring.url '/static/assets/layUI/layer/skin/default/layer.css'/>"/>
+
+    <script type="text/javascript" src="<@spring.url '/static/js/jquery-1.11.1.min.js'/>"></script>
+</head>
+<body>
+<#include "chooseContact.ftl"/>
+<#include "./chooseDriver.ftl">
+<#--header.ftl-->
+<#include "../common/header.ftl" />
+<div class="cont">
+    <#--left.ftl-->
+    <#include "../common/left.ftl" />
+    <div class="cont_right">
+        <div id="cont_left">
+            <h3>指定车主</h3>
+            <div class="cont_left_cont"  style="width:48%;float:left">
+
+                <div class="tit">选择车主</div>
+                <p class="show_text">车主</p>
+                <div class="search_carer">
+                    <div class="search_carer_area1 border" id="choose_drivers">
+                    </div>
+                    <button class="an add_carer">添加车主</button>
+                </div>
+
+                <div class="tit">选择时间</div>
+                <div class="search_carer">
+                    <div class="time_zhuang">
+                        <p class="show_text">装货时间</p>
+                        <input type="text" id="start_time" class="border" placeholder="请选择装货时间"/>
+                    </div>
+                    <div class="time_dao">
+                        <p class="show_text">送达时间</p>
+                        <input type="text" id="end_time" class="border" placeholder="请选择送达时间"/>
+                    </div>
+                </div>
+
+                <div class="tit">货物描述</div>
+                <div class="search_carer miaoshu">
+                    <div class="rong">
+                        <p class="show_text">容量</p>
+                        <p class="border"><input type="number" id="rongliang" placeholder="填写货物容积"/>m³</p>
+                    </div><div class="zhong">
+                    <p class="show_text">重量</p>
+                    <p class="border"><input id="zhongliang" type="number" placeholder="请填写货物重量"/>吨</p>
+                </div><div class="lei">
+                    <p class="show_text">类别</p>
+                    <p class="border"><select name="leibie" id="leibie">
+                        <option id="goodtype"></option>
+                    </select></p>
+                </div><div class="lei shu">
+                    <div class="show_text">订单数量 <img src="<@spring.url '/static/images/help.png'/>" id="shu_img"
+                                                     alt=""/>
+                        <p class="help">参考货物所需车辆信息,确定同时生成订单数量</p></div>
+                    <p class="border"><select name="lei" id="orderNum">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select></p>
+                </div>
+                </div>
+
+                <div class="tit">装货地</div>
+                <div class="search_carer">
+                    <div class="name">
+                        <p class="show_text">姓名</p>
+                        <input type="text" id="start_name" class="border" placeholder="请填写姓名"/>
+                    </div>
+                    <div class="phone">
+                        <p class="show_text">手机号</p>
+                        <input type="number" id="start_phone" class="border" placeholder="请填写手机号"/>
+                    </div>
+                    <button class="an margin_top chose_address">选择常用地址</button>
+                </div>
+                <p class="show_text">装货地址</p>
+                <p class="area"><select id="s_province" class="border" name="s_province">
+                    <option id="province1"></option></select><select class="border" id="s_city" name="s_city">
+                    <option id="city1"></option></select><select class="border" id="s_county" name="s_county">
+                    <option id="county1"></option></select><input type="text" class="border" id="address" placeholder="请输入详细地址"/><button id="addContact_1" class="an">添加到常用地址</button>
+                </p>
+
+                <div class="tit">卸货地</div>
+                <div class="search_carer">
+                    <div class="name">
+                        <p class="show_text">姓名</p>
+                        <input type="text" id="end_name" class="border" placeholder="请填写姓名"/>
+                    </div>
+                    <div class="phone">
+                        <p class="show_text">手机号</p>
+                        <input type="number" id="end_phone" class="border" placeholder="请填写手机号"/>
+                    </div>
+                    <button class="an margin_top chose_address2">选择常用地址</button>
+                </div>
+                <p class="show_text">卸货地址</p>
+                <p class="area"><select id="s_province2" class="border" name="s_province2">
+                    <option id="province2"></option></select><select class="border" id="s_city2" name="s_city">
+                    <option id="city2"></option></select><select class="border" id="s_county2" name="s_county2">
+                    <option id="county2"></option></select><input type="text" class="border" id="address2" placeholder="请输入详细地址"/><button id="addContact_2" class="an">添加到常用地址</button>
+                </p>
+
+                <div class="tit">额外信息</div>
+                <div class="search_carer car_canshu infor">
+                    <div class="car_xing car_xing1">
+                        <p class="show_text">车型</p>
+                        <select name="" id="chexing" class="border">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="car_long">
+                        <p class="show_text">车长</p>
+                        <select name="" id="chechang" class="border">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <#--<div class="car_liang">-->
+                    <#--<p class="show_text">参考车辆</p>-->
+                    <#--<select name="" id="shuliang" class="border">-->
+                        <#--<option value="1">1辆</option>-->
+                        <#--<option value="2">2辆</option>-->
+                        <#--<option value="3">3辆</option>-->
+                        <#--<option value="4">4辆</option>-->
+                        <#--<option value="5">5辆</option>-->
+                        <#--<option value="6">6辆</option>-->
+                        <#--<option value="7">7辆</option>-->
+                        <#--<option value="8">8辆</option>-->
+                        <#--<option value="9">9辆</option>-->
+                        <#--<option value="10">10辆</option>-->
+                        <#--</select>-->
+                    <#--</div>-->
+                    <div class="share_type">
+                        <p class="show_text">拼车类型</p>
+                        <select name="" id="share_type" class="border">
+                            <option value="0">不限</option>
+                            <option value="1">拼车</option>
+                            <option value="2">整车</option>
+                        </select>
+                    </div>
+
+                    <div class="car_xing">
+                        <p class="show_text">是否开票</p>
+                        <p class="fapiao"><span class="border span_border">是</span><span class="border span_cur">否</span>
+                        </p>
+                    </div>
+                    <div class="car_long">
+                        <p class="show_text">是否回单</p>
+                        <p class="huidan"><span class="border span_border ">是</span><span class="border span_cur">否</span>
+                        </p>
+                    </div>
+                    <div class="car_liang car_privce">
+                        <p class="show_text">参考运费</p>
+                        <p class="border"><input id="yunfei" type="text" placeholder="货物运费"/>元</p>
+                    </div>
+                </div>
+
+                <div class="tit">备注</div>
+                <p class="show_text">填写备注信息</p>
+                <div class="search_carer">
+                <textarea name="" id="beizhu" class="border" cols="30" rows="6" placeholder="请填写备注信息">
+                </textarea>
+                </div>
+                <button class="sub" id="sub">提交</button>
+            </div>
+        </div>
+        <div id="cont_right"  class="cont_right_cont"  style="width:45%;float:right" >
+            <div >
+
+                deeere
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<#include "../common/footer.ftl"/>
+<script type="text/javascript" src="<@spring.url '/static/assets/layUI/laydate/laydate.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/assets/layUI/laypage/laypage.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/assets/layUI/layer/layer.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/js/basic/commonoptions.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/js/basic/qhtarea.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/js/busi/addContact.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/js/busi/chooseAddress.js'/>"></script>
+<script type="text/javascript" src="<@spring.url '/static/js/busi/appointDriver.js'/>"></script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="scm-study:war">
+    <output-path>$PROJECT_DIR$/scm-study/target</output-path>
+    <root id="archive" name="scm-study.war">
+      <element id="artifact" artifact-name="scm-study:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.system.user.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.system.user.entity.User" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="dept_Id" property="deptId" jdbcType="BIGINT" />
+    <result column="oid" property="oid" jdbcType="BIGINT" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap type="org.xfs.scm.system.user.po.UserPo" id="UserResultMap" extends="BaseResultMap">
+  	 <result column="ocode" property="ocode" jdbcType="VARCHAR" />
+  	 <result column="oname" property="oname" jdbcType="VARCHAR" />
+     <result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+     <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tu.user_id, tu.dept_Id, tu.oid, tu.user_code, tu.user_name, tu.state, tu.email, tu.sex, tu.birthday, tu.mobile
+  </sql>
+  
+  <sql id="WHERE_CONDITION">
+  	 <trim prefix="WHERE" prefixOverrides="AND |OR ">
+  	    <if test="userId!=null">
+  	       AND tu.user_id=#{userId,jdbcType=VARCHAR}
+  	    </if>
+    	<if test="userCode!=null">
+    	   AND tu.user_code = #{userCode,jdbcType=VARCHAR}
+    	</if>
+    	 <if test="userName != null" >
+		    AND tu.user_name like CONCAT('%',#{userName,jdbcType=VARCHAR},'%')
+		 </if>
+    	<if test="pwd!=null">
+    	   AND tu.pwd=#{pwd,jdbcType=VARCHAR} 
+    	</if>
+    	<if test="state!=null">
+    	   AND tu.state=#{state,jdbcType=TINYINT} 
+    	</if>
+    	<if test="sex!=null">
+    	   AND tu.sex=#{sex,jdbcType=TINYINT} 
+    	</if>
+    	<if test="oid!=null">
+    	   AND tbo.oid=#{oid,jdbcType=BIGINT} 
+    	</if>
+    	<if test="deptId!=null">
+    	   AND td.dept_id=#{deptId,jdbcType=BIGINT} 
+    	</if>
+    </trim>
+  </sql>
+  
+  <sql id="Base_Column_List2" >
+    tu.created_by, tu.created_time, tu.last_update_by, tu.last_update_time
+  </sql>
+  <select id="getUser" resultMap="UserResultMap" parameterType="org.xfs.scm.system.user.vo.UserVo" >
+    SELECT 
+    	<include refid="Base_Column_List" />,
+    	<include refid="Base_Column_List2" />,
+    	 tbo.ocode,tbo.oname,
+    	 td.dept_code,td.dept_name
+    FROM tb_user tu
+    	LEFT JOIN tb_organization tbo  ON tu.oid=tbo.oid 
+		LEFT JOIN tb_dept td ON tu.dept_Id=td.dept_id
+        <include refid="WHERE_CONDITION" />
+  </select>
+ 
+ 
+  <select id="countUser" resultType="java.lang.Long" parameterType="org.xfs.scm.system.user.vo.UserVo">
+  	    SELECT COUNT(*) AS cc
+    FROM tb_user tu
+    	LEFT JOIN tb_organization tbo  ON tu.oid=tbo.oid 
+		LEFT JOIN tb_dept td ON tu.dept_Id=td.dept_id
+        <include refid="WHERE_CONDITION" />
+  </select>
+</mapper>

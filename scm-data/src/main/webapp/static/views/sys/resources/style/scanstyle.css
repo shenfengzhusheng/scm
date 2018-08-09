@@ -1,0 +1,39 @@
+.head{height: 60px;}
+.head span{float: right;display: inline-block;width: 200px;height: 60px;line-height: 60px;font-size: 18px;color: #999;}
+.logonav{min-width: 670px; text-align: center;overflow: hidden;}
+.main{position: absolute;top:340px;left:0;width: 100%;min-width:670px;z-index: -1;}
+.main .l_main{width: 35%;float: left;}
+.main .r_main{width: 35%;float: right;}
+
+.blue_left_over{width: 80%;background: #3886CE;overflow:hidden;}
+.step_1-1{width: 70%;height: 280px; float:left}
+.step_1-2{width: 30%;float:left}
+.step_2-1{width: 30%;float:right}
+.step_2-2{width: 70%;height: 280px;float:right;background: #3886CE;overflow:hidden;}
+
+.step_1-1 img{height: 280px;}
+.step_1-2 img{width: 100%;height: 280px;}
+.step_2-1 img{width: 100%;height: 280px;}
+
+.login_main{width: 100%px;overflow: hidden;text-align: center;}
+.m_main{width: 665px;height:300px;overflow: hidden;display: inline-block;background: url(../img/login_04.png) no-repeat;background-size:100% 100% ;}
+.m_main_l{width: 50%;float: left;text-align: center;}
+.m_main_l img{margin-top:100px;}
+.m_main_r{width: 50%;float: left;}
+.dialog{margin-top: 100px; overflow: hidden;text-align: left;}
+.dialog span{display: block;margin-bottom: 20px;color: #4e7db9;font-size: 16px;font-family:"鏂板畫浣�;}
+.dialog span input{width: 180px;height: 30px;margin-left: 20px;text-indent: 1em;}
+
+.foot{position: fixed;width: 100%;min-width: 670px; bottom: 0;left: 0;text-align: center;}
+.copyright p{font-size: 16px;color: #999;}
+
+
+
+.scan_view_l{width: 60%; float: left;overflow: hidden;}
+.scan_view_r{width: 40%;height:200px;float: left;}
+.grid{width: 100%; height:100%;border-left: 2px solid #2C2C2C;margin-left: -2px;}
+.scan_table{width: 100%;padding: 10px;}
+.nav_title th{height: 30px;width: 20%;}
+.nav_title td{height: 30px;width: 20%;text-align: center;}
+
+

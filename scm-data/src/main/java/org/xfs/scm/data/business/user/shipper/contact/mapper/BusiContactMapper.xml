@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.business.user.shipper.contact.mapper.BusiContactMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.business.user.shipper.contact.vo.BusiContactVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="owner_user_id" property="ownerUserId" jdbcType="BIGINT" />
+    <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
+    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="contact_addr_code" property="contactAddrCode" jdbcType="VARCHAR" />
+    <result column="contact_addr_detail" property="contactAddrDetail" jdbcType="VARCHAR" />
+    <result column="contact_default" property="contactDefault" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, owner_user_id, contact_name, contact_phone, contact_addr_code, contact_addr_detail, 
+    contact_default, create_time, update_time
+  </sql>
+  <select id="getBusiContacts" resultMap="BaseResultMap" parameterType="org.xfs.scm.data.business.user.shipper.contact.vo.BusiContactVo" >
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM tb_busi_contact
+   <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="id!=null">
+         AND id=#{id,jdbcType=BIGINT}
+      </if>
+     <if test="ownerUserId!=null">
+        AND owner_user_id=#{ownerUserId,jdbcType=BIGINT}
+     </if>
+     <if test="contactName!=null and contactName!=''">
+        AND contact_name LIKE CONCAT('%',#{contactName,jdbcType=VARCHAR},'%')
+     </if>
+     <if test="contactPhone!=null and contactPhone!=''">
+       AND contact_phone LIKE CONCAT('%',#{contactPhone,jdbcType=VARCHAR},'%')
+     </if>
+   </trim>
+  </select>
+  <delete id="removeBusiContact" parameterType="java.lang.Long" >
+    delete from tb_busi_contact
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.business.user.shipper.contact.entity.BusiContact" >-->
+    <!--insert into tb_busi_contact (id, order_id, owner_user_id, -->
+      <!--contact_name, contact_phone, contact_addr_code, -->
+      <!--contact_addr_detail, contact_default, create_time, -->
+      <!--update_time)-->
+    <!--values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{ownerUserId,jdbcType=BIGINT}, -->
+      <!--#{contactName,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, #{contactAddrCode,jdbcType=VARCHAR}, -->
+      <!--#{contactAddrDetail,jdbcType=VARCHAR}, #{contactDefault,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, -->
+      <!--#{updateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addBusiContact" parameterType="org.xfs.scm.data.business.user.shipper.contact.vo.BusiContactVo" >
+    insert into tb_busi_contact
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="ownerUserId != null" >
+        owner_user_id,
+      </if>
+      <if test="contactName != null" >
+        contact_name,
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone,
+      </if>
+      <if test="contactAddrCode != null" >
+        contact_addr_code,
+      </if>
+      <if test="contactAddrDetail != null" >
+        contact_addr_detail,
+      </if>
+      <if test="contactDefault != null" >
+        contact_default,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerUserId != null" >
+        #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null" >
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddrCode != null" >
+        #{contactAddrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddrDetail != null" >
+        #{contactAddrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactDefault != null" >
+        #{contactDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyBusiContact" parameterType="org.xfs.scm.data.business.user.shipper.contact.vo.BusiContactVo" >
+    update tb_busi_contact
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerUserId != null" >
+        owner_user_id = #{ownerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null" >
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddrCode != null" >
+        contact_addr_code = #{contactAddrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddrDetail != null" >
+        contact_addr_detail = #{contactAddrDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="contactDefault != null" >
+        contact_default = #{contactDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

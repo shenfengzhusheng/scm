@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.scm.data.system.payaccount.mapper.PayAccountMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.scm.data.system.payaccount.entity.PayAccount" >
+    <id column="pay_id" property="payId" jdbcType="INTEGER" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="partner" property="partner" jdbcType="VARCHAR" />
+    <result column="appid" property="appid" jdbcType="VARCHAR" />
+    <result column="auth_token" property="authToken" jdbcType="VARCHAR" />
+    <result column="public_key" property="publicKey" jdbcType="VARCHAR" />
+    <result column="private_key" property="privateKey" jdbcType="VARCHAR" />
+    <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
+    <result column="return_url" property="returnUrl" jdbcType="VARCHAR" />
+    <result column="seller" property="seller" jdbcType="VARCHAR" />
+    <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+    <result column="input_charset" property="inputCharset" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="keystore_path" property="keystorePath" jdbcType="VARCHAR" />
+    <result column="store_password" property="storePassword" jdbcType="VARCHAR" />
+    <result column="is_test" property="isTest" jdbcType="BIT" />
+    <result column="state" property="state" jdbcType="BIT" />
+    <result column="created_by" property="createdBy" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="BaseResultWithCustomerMap" type="org.xfs.scm.data.system.payaccount.po.PayAccountPo"  extends="BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tp.pay_id,  tp.cust_id,  tp.partner,  tp.appid, tp.auth_token,  tp.public_key,  tp.private_key,  tp.notify_url,  tp.return_url,
+    tp.seller,  tp.sign_type,  tp.input_charset,  tp.pay_type,  tp.msg_type,  tp.keystore_path,  tp.store_password,
+    tp.is_test,  tp.state,tp.created_by,  tp.created_time,  tp.last_update_by,  tp.last_update_time
+  </sql>
+  <select id="getPayAccounts" resultMap="BaseResultWithCustomerMap" parameterType="org.xfs.scm.data.system.payaccount.vo.PayAccountVo" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_pay_account tp
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+        <if test="superFlag!=1">
+            AND EXISTS (SELECT 1 FROM tb_user_customer tuc WHERE tuc.cust_id=tp.cust_id AND tuc.user_id=#{userId,jdbcType=BIGINT} )
+        </if>
+        <if test="payType!=null">
+          AND tp.pay_type=#{payType,jdbcType=VARCHAR}
+        </if>
+        <if test="appid!=null">
+          AND tp.appid=#{appid,jdbcType=VARCHAR}
+        </if>
+        <if test="payId!=null">
+          AND tp.pay_id=#{payId,jdbcType=INTEGER}
+        </if>
+        <if test="state!=null">
+          AND tp.state=#{state,jdbcType=BIT}
+        </if>
+    </trim>
+  </select>
+
+  <select id="getPayAccount" resultMap="BaseResultWithCustomerMap" parameterType="org.xfs.scm.data.system.payaccount.vo.PayAccountVo" >
+    SELECT
+       <include refid="Base_Column_List" />
+    FROM tb_pay_account tp
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="payId!=null">
+        AND tp.pay_id=#{payId,jdbcType=INTEGER}
+      </if>
+
+      <if test="appid!=null">
+        AND tp.appid=#{appid,jdbcType=VARCHAR}
+      </if>
+      <if test="state!=null">
+        AND tp.state=#{state,jdbcType=BIT}
+      </if>
+    </trim>
+  </select>
+  <delete id="removePayAccounts" parameterType="java.lang.Integer" >
+    delete from tb_pay_account
+    where pay_id = #{payId,jdbcType=INTEGER}
+  </delete>
+  <!--<insert id="insert" parameterType="org.xfs.scm.data.system.payaccount.vo.PayAccountVo" >-->
+    <!--insert into tb_pay_account (pay_id, cust_id, partner, -->
+      <!--appid, public_key, private_key, -->
+      <!--notify_url, return_url, seller, -->
+      <!--sign_type, input_charset, pay_type, -->
+      <!--msg_type, keystore_path, store_password, -->
+      <!--is_test, created_by, created_time, -->
+      <!--last_update_by, last_update_time)-->
+    <!--values (#{payId,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, #{partner,jdbcType=VARCHAR}, -->
+      <!--#{appid,jdbcType=VARCHAR}, #{publicKey,jdbcType=VARCHAR}, #{privateKey,jdbcType=VARCHAR}, -->
+      <!--#{notifyUrl,jdbcType=VARCHAR}, #{returnUrl,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR}, -->
+      <!--#{signType,jdbcType=VARCHAR}, #{inputCharset,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, -->
+      <!--#{msgType,jdbcType=VARCHAR}, #{keystorePath,jdbcType=VARCHAR}, #{storePassword,jdbcType=VARCHAR}, -->
+      <!--#{isTest,jdbcType=BIT}, #{createdBy,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, -->
+      <!--#{lastUpdateBy,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=TIMESTAMP})-->
+  <!--</insert>-->
+  <insert id="addPayAccount" parameterType="org.xfs.scm.data.system.payaccount.vo.PayAccountVo" >
+    insert into tb_pay_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="partner != null" >
+        partner,
+      </if>
+      <if test="appid != null" >
+        appid,
+      </if>
+      <if test="authToken!=null">
+        auth_token,
+      </if>
+      <if test="publicKey != null" >
+        public_key,
+      </if>
+      <if test="privateKey != null" >
+        private_key,
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url,
+      </if>
+      <if test="returnUrl != null" >
+        return_url,
+      </if>
+      <if test="seller != null" >
+        seller,
+      </if>
+      <if test="signType != null" >
+        sign_type,
+      </if>
+      <if test="inputCharset != null" >
+        input_charset,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="msgType != null" >
+        msg_type,
+      </if>
+      <if test="keystorePath != null" >
+        keystore_path,
+      </if>
+      <if test="storePassword != null" >
+        store_password,
+      </if>
+      <if test="isTest != null" >
+        is_test,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="createdTime != null" >
+        created_time,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="payId != null" >
+        #{payId,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="partner != null" >
+        #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="authToken!=null">
+        #{authToken,jdbcType=VARCHAR},
+      </if>
+      <if test="publicKey != null" >
+        #{publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="privateKey != null" >
+        #{privateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null" >
+        #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="inputCharset != null" >
+        #{inputCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="keystorePath != null" >
+        #{keystorePath,jdbcType=VARCHAR},
+      </if>
+      <if test="storePassword != null" >
+        #{storePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="isTest != null" >
+        #{isTest,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyPayAccount" parameterType="org.xfs.scm.data.system.payaccount.vo.PayAccountVo" >
+    update tb_pay_account
+    <set >
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="partner != null" >
+        partner = #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        appid = #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="authToken!=null">
+        auth_token = #{authToken,jdbcType=VARCHAR},
+      </if>
+      <if test="publicKey != null" >
+        public_key = #{publicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="privateKey != null" >
+        private_key = #{privateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null" >
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="returnUrl != null" >
+        return_url = #{returnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="seller != null" >
+        seller = #{seller,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null" >
+        sign_type = #{signType,jdbcType=VARCHAR},
+      </if>
+      <if test="inputCharset != null" >
+        input_charset = #{inputCharset,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null" >
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="keystorePath != null" >
+        keystore_path = #{keystorePath,jdbcType=VARCHAR},
+      </if>
+      <if test="storePassword != null" >
+        store_password = #{storePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="isTest != null" >
+        is_test = #{isTest,jdbcType=BIT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null" >
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pay_id = #{payId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

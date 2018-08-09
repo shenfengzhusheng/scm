@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mybatis-comment-generator/mybatis-comment-generator.iml" filepath="$PROJECT_DIR$/mybatis-comment-generator/mybatis-comment-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm.iml" filepath="$PROJECT_DIR$/scm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-api/scm-api.iml" filepath="$PROJECT_DIR$/scm-api/scm-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-cache/scm-cache.iml" filepath="$PROJECT_DIR$/scm-cache/scm-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-cas/scm-cas.iml" filepath="$PROJECT_DIR$/scm-cas/scm-cas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-cloud/scm-cloud.iml" filepath="$PROJECT_DIR$/scm-cloud/scm-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-common/scm-common.iml" filepath="$PROJECT_DIR$/scm-common/scm-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-crm/scm-crm.iml" filepath="$PROJECT_DIR$/scm-crm/scm-crm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-data/scm-data.iml" filepath="$PROJECT_DIR$/scm-data/scm-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-dubbo-api/scm-dubbo-api.iml" filepath="$PROJECT_DIR$/scm-dubbo-api/scm-dubbo-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-goods/scm-goods.iml" filepath="$PROJECT_DIR$/scm-goods/scm-goods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-managers/scm-managers-entity/scm-managers-entity.iml" filepath="$PROJECT_DIR$/scm-managers/scm-managers-entity/scm-managers-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-managers/scm-managers-mapper/scm-managers-mapper.iml" filepath="$PROJECT_DIR$/scm-managers/scm-managers-mapper/scm-managers-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-managers/scm-managers-service/scm-managers-service.iml" filepath="$PROJECT_DIR$/scm-managers/scm-managers-service/scm-managers-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-managers/scm-managers-web/scm-managers-web.iml" filepath="$PROJECT_DIR$/scm-managers/scm-managers-web/scm-managers-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-message/scm-message.iml" filepath="$PROJECT_DIR$/scm-message/scm-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-mobile/scm-mobile.iml" filepath="$PROJECT_DIR$/scm-mobile/scm-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-mq/scm-mq.iml" filepath="$PROJECT_DIR$/scm-mq/scm-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-netty/scm-netty.iml" filepath="$PROJECT_DIR$/scm-netty/scm-netty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-oms/scm-oms.iml" filepath="$PROJECT_DIR$/scm-oms/scm-oms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-pay/scm-pay.iml" filepath="$PROJECT_DIR$/scm-pay/scm-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-platform/scm-platform.iml" filepath="$PROJECT_DIR$/scm-platform/scm-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-protal/scm-protal.iml" filepath="$PROJECT_DIR$/scm-protal/scm-protal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-rpc-provider/scm-rpc-provider.iml" filepath="$PROJECT_DIR$/scm-rpc-provider/scm-rpc-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scm-study/scm-study.iml" filepath="$PROJECT_DIR$/scm-study/scm-study.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.core.business.test.mapper.TestMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.core.business.test.po.TestPo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, version
+  </sql>
+  <select id="selectTest" resultMap="BaseResultMap" parameterType="org.xfs.core.business.test.po.TestPo" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM tb_test 
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+		<if test="name != null" > 
+		AND	name=#{name,jdbcType=VARCHAR}
+      	</if>
+      	<if test="code != null" >
+         AND code LIKE  CONCAT('%',  #{code,jdbcType=VARCHAR},'%')
+      	</if>
+      	<if test="version != null" >
+        AND	version=#{version,jdbcType=INTEGER}
+      	</if>
+      	<if test="id != null" >
+    	 AND id = #{id,jdbcType=VARCHAR}
+      	</if>
+     </trim>
+     
+  </select>
+  <delete id="removeTest" parameterType="org.xfs.core.business.test.po.TestPo" >
+    DELETE FROM tb_test
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+ 
+  <insert id="addTest" parameterType="org.xfs.core.business.test.po.TestPo" >
+    INSERT INTO tb_test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyTest" parameterType="org.xfs.core.business.test.po.TestPo" >
+    UPDATE tb_test
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+        version =version+1,
+    </set>
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+ 
+</mapper>

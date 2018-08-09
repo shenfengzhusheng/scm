@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.xfs.core.business.goods.item.mapper.ItemPoMapper" >
+  <resultMap id="BaseResultMap" type="org.xfs.core.business.goods.item.po.ItemPo" >
+    <id column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    item_id, item_code, item_name, status
+  </sql>
+  
+  <select id="getItem" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_item
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="removeItem" parameterType="org.xfs.core.business.goods.item.po.ItemPo">
+    DELETE FROM tb_item
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+    	<if test="itemId != null" > 
+    		AND item_id = #{itemId,jdbcType=BIGINT}
+    	</if>
+    	<if test="itemCode != null" > 
+    		AND item_code = #{itemCode,jdbcType=VARCHAR}
+    	</if>
+    	<if test="itemName != null" > 
+    		AND item_name = #{itemName,jdbcType=VARCHAR}
+    	</if>
+    	<if test="status != null" >
+        	AND status=#{status,jdbcType=BIT}
+      </if>
+    </trim>
+  </delete>
+ 
+  <insert id="addItem" parameterType="org.xfs.core.business.goods.item.po.ItemPo" >
+    insert into tb_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="itemName != null" >
+        item_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="modifyItem" parameterType="org.xfs.core.business.goods.item.po.ItemPo" >
+    update tb_item
+    <set >
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND | OR">
+    	<if test="itemId != null" > 
+    		AND item_id = #{itemId,jdbcType=BIGINT}
+    	</if>
+    
+    	<if test="status != null" >
+        	AND status=#{status,jdbcType=BIT}
+      </if>
+    </trim>
+  </update>
+</mapper>
