@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="war" name="scm-pay:war">
     <output-path>$PROJECT_DIR$/scm-pay/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>scm-pay</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="archive" name="scm-pay.war">
       <element id="artifact" artifact-name="scm-pay:war exploded" />
     </root>

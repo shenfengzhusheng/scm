@@ -17,6 +17,7 @@ public class CallbackWeb {
 
     @Reference(cache = "lru")
     private CarApi carApi;
+
     @RequestMapping("test")
     public Object test(String name){
         if(name==null){

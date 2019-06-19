@@ -6,6 +6,7 @@
     <file type="web" url="file://$PROJECT_DIR$/scm-managers/scm-managers-web" />
     <file type="web" url="file://$PROJECT_DIR$/scm-pay" />
     <file type="web" url="file://$PROJECT_DIR$/scm-study" />
+    <type id="Spring" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

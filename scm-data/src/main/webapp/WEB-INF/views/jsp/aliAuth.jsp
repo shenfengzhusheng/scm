@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title>授权</title>
+    <title>授权-55</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/core/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/core/js/jquery.min.js"></script>
     <script type="text/javascript"  src="${pageContext.request.contextPath}/static/core/bootstrap/js/bootstrap.js"></script>

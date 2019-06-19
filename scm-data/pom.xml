@@ -423,7 +423,7 @@
                     <version>2.2</version>
                     <configuration>
                         <server>tomcat7-manager</server>
-                        <port>80</port>
+                        <port>9999</port>
                         <path>/</path>
                         <uriEncoding>${project.build.sourceEncoding}</uriEncoding>
                     </configuration>

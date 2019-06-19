@@ -49,6 +49,7 @@ var organizationCtrl=function($scope,$uibModal,$http,SweetAlert,commonService){
         modalInstance.result
             .then(function (data) {
                if(data){
+
                    if($scope.node.id){
                        $scope.node.nodes.push({
                            id: data.ocode ,
@@ -117,7 +118,9 @@ var organizationCtrl=function($scope,$uibModal,$http,SweetAlert,commonService){
         scope.toggle();
     //    console.info('yes toggle');
 
-    };
+    };.
+
+
 
     $scope.moveLastToTheBeginning = function () {
         console.info('1111');

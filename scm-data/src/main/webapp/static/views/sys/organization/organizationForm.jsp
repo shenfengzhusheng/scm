@@ -19,7 +19,7 @@
                     <label>组织编码：</label>
                     <input type="text" id="ocode" class="form-control" ng-model="modal.data.ocode" required="组织编码不能为空">
                     <input type="hidden" id="poid" ng-model="modal.data.poid">
-                    <input type="hidden" id="oid" ng-model="modal.data.oid">
+                    <input type="text" id="oid" ng-model="modal.data.oid">
                 </div>
             </div>
             <div class="col-sm-9">

@@ -28,10 +28,10 @@ public class MongoConfig {
     @Value("${mongo.username}")
     private String MONGODB_USERNAME;
 
-    @Value("${mogodb_url}")
+    @Value("${mongo.host}")
     private String MONGODB_URL;
 
-    @Value("${mogodb_port}")
+    @Value("${mongo.port}")
     private String MONGODB_PORT;
     @Bean
     public MongoTemplate mongoTemplate(){

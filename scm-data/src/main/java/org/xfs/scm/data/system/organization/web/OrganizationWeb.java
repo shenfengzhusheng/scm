@@ -2,6 +2,7 @@ package org.xfs.scm.data.system.organization.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.xfs.scm.common.base.model.Grid;
 import org.xfs.scm.common.base.model.JsonResponse;
@@ -28,6 +29,10 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/rest/sys/organization/")
 public class OrganizationWeb extends BaseWeb {
+    @Override
+    public void initBinder(ServletRequestDataBinder binder) {
+        super.initBinder(binder);
+    }
 
     @Autowired
     private OrganizationServiceI organizationService;

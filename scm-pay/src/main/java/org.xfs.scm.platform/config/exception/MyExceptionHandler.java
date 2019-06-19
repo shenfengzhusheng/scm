@@ -29,7 +29,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver  {
 		}
 		ModelAndView mv = null;
 		// JSP格式返回
-
+		ex.printStackTrace();
 		if(!(request.getHeader("accept").contains("application/json")  || (request.getHeader("X-Requested-With")!= null && request.getHeader("X-Requested-With").contains("XMLHttpRequest") ))) {
 			mv=new ModelAndView();
 			String errorMessage= FastJsonUtil.toJsonString(new JsonResponse<String>(ex.getMessage()));

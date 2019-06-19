@@ -105,7 +105,7 @@ public class LoginWeb extends BaseWeb {
                         TokenManager.setValToSession("login_user",user);
 
                     }
-                    WebUtils.getSavedRequest(super.getRequest()).getRequestUrl();
+                  //  WebUtils.getSavedRequest(super.getRequest()).getRequestUrl();
                     //WebUtils.getAndClearSavedRequest(super.getRequest());
                     //获取用户未登录之前的地址
                     String url = (String) super.getRequest().getAttribute(WebUtils.FORWARD_REQUEST_URI_ATTRIBUTE);

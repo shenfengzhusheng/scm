@@ -11,6 +11,7 @@ var organizationModalCtrl=function($uibModalInstance,commonService,data,type,btn
     modal.data=data;
     console.info('modal.data:'+angular.toJson(modal.data));
     modal.submit=function () {
+        console.info('-------------'+JSON.stringify(modal.data));
         var submitUrl=saveUrl;
         if(modal.data.oid){
             submitUrl=modifyUrl;
