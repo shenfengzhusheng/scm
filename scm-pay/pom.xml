@@ -13,7 +13,7 @@
     <properties>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <shiro.version>1.2.4</shiro.version>
+        <shiro.version>1.6.0</shiro.version>
         <swagger.version>2.7.0</swagger.version>
         <swagger-core.version>1.5.16</swagger-core.version>
         <logback-classic.version>1.1.8</logback-classic.version>
